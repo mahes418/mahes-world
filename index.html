@@ -3,115 +3,189 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Mahes Downloader</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mahes World</title>
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#080808;color:#fff;font-family:Arial,sans-serif}
-header{padding:27px 15px;text-align:center;border-bottom:1px solid #333}
-header h1{font-size:29px;margin:0 0 9px}
-header p{color:#aaa;margin:0}
-main{max-width:600px;margin:35px auto;padding:16px}
-.card{border:1px solid #333;background:#111;border-radius:18px;padding:23px}
-h2{font-size:21px}
-.desc{color:#aaa;line-height:1.6;font-size:14px}
-input{width:100%;padding:15px;background:#080808;color:white;border:1px solid #555;border-radius:10px;font-size:15px;margin:12px 0}
-.buttons{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}
-button{padding:14px 8px;background:#fff;color:#000;border:0;border-radius:9px;font-size:14px;font-weight:bold;cursor:pointer}
-button:active{opacity:.7}
-.secondary{background:#222;color:white;border:1px solid #555}
-#status{margin-top:18px;padding:13px;border-radius:9px;background:#080808;color:#ccc;overflow-wrap:anywhere;line-height:1.5}
-footer{text-align:center;color:#777;font-size:12px;padding:25px}
-a{color:white}
+header{text-align:center;padding:26px 15px;border-bottom:1px solid #333}
+header h1{font-size:30px;letter-spacing:3px;margin:0}
+header p{color:#aaa}
+nav{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;padding:15px}
+button{background:#fff;color:#000;border:0;border-radius:9px;padding:12px 15px;font-weight:bold;cursor:pointer}
+button.active{background:#888;color:white}
+main{max-width:850px;margin:auto;padding:12px}
+section{display:none}
+section.active{display:block}
+.card{background:#121212;border:1px solid #333;border-radius:16px;padding:18px;margin-bottom:15px}
+h2{font-size:20px}
+p{line-height:1.6}
+.muted{color:#aaa;font-size:14px}
+.anime{text-align:center;overflow:hidden;background:linear-gradient(#222,#080808)}
+.anime svg{width:180px;max-width:100%;height:190px}
+.anime h2{letter-spacing:3px}
+iframe{width:100%;height:352px;border:0;border-radius:12px}
+input{width:100%;padding:12px;margin:8px 0;background:#080808;color:white;border:1px solid #555;border-radius:8px}
+audio{width:100%;margin-top:12px}
+.game{text-align:center;background:#080808;padding:18px;border-radius:12px}
+#target{font-size:48px;padding:15px;margin:12px}
+footer{text-align:center;color:#777;padding:25px;font-size:12px}
 </style>
 </head>
 <body>
+
 <header>
-<h1>MAHES DOWNLOADER</h1>
-<p>Simple. Fast. Black & White.</p>
+<h1>MAHES WORLD</h1>
+<p>ANIME • MUSIC • GAMES</p>
 </header>
 
+<nav>
+<button class="active" onclick="show('home',this)">HOME</button>
+<button onclick="show('music',this)">MUSIC 🎧</button>
+<button onclick="show('games',this)">GAMES 🎮</button>
+</nav>
+
 <main>
+<section id="home" class="active">
+<div class="card anime">
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<linearGradient id="hair" x2="1" y2="1">
+<stop stop-color="#aaa"/><stop offset="1" stop-color="#222"/>
+</linearGradient>
+</defs>
+<circle cx="100" cy="95" r="77" fill="#292929"/>
+<path d="M45 180 L48 100 Q35 30 85 24 Q135 7 154 65 L160 150 L140 130 L130 76 L65 72 L58 140Z" fill="url(#hair)"/>
+<path d="M60 75 Q52 42 90 38 Q130 32 141 73 L135 127 Q120 151 100 151 Q75 146 64 125Z" fill="#ddd"/>
+<path d="M62 75 Q49 49 75 28 L90 57 L111 23 Q142 40 143 78 L125 63 L109 48 L87 65Z" fill="#111"/>
+<path d="M72 91 Q83 80 94 92 M106 92 Q118 80 129 91" stroke="#111" stroke-width="4" fill="none"/>
+<ellipse cx="84" cy="100" rx="8" ry="12" fill="#111"/>
+<ellipse cx="117" cy="100" rx="8" ry="12" fill="#111"/>
+<circle cx="86" cy="96" r="3" fill="white"/>
+<circle cx="119" cy="96" r="3" fill="white"/>
+<path d="M95 121 Q101 127 108 120" fill="none" stroke="#555" stroke-width="2"/>
+<path d="M65 145 Q100 130 135 145 L159 200 L40 200Z" fill="#eee"/>
+<path d="M88 145 L100 167 L112 145" fill="#111"/>
+</svg>
+<h2>WELCOME TO MY WORLD</h2>
+<p class="muted">Your music. Your games. Your world.</p>
+</div>
 <div class="card">
-<h2>Download Video / Audio</h2>
-<p class="desc">Tempel link video di bawah ini untuk memulai.</p>
+<h2>🖤 Selamat datang!</h2>
+<p>Tempat mendengarkan musik dan bermain game dalam satu website.</p>
+<button onclick="show('music',document.querySelectorAll('nav button')[1])">Putar Musik 🎵</button>
+<button onclick="show('games',document.querySelectorAll('nav button')[2])">Main Game 🎮</button>
+</div>
+</section>
 
-<input id="url" type="url" placeholder="Tempel link TikTok di sini...">
-
-<div class="buttons">
-<button onclick="downloadMedia('mp4')">↓ Download MP4</button>
-<button onclick="downloadMedia('mp3')">♫ Download MP3</button>
+<section id="music">
+<div class="card">
+<h2>🎧 Spotify Music</h2>
+<p class="muted">Cari dan dengarkan musik lewat Spotify tanpa membuka YouTube. Pemutar mungkin memerlukan login.</p>
+<iframe
+title="Spotify music player"
+src="https://open.spotify.com/embed/playlist/37i9dQZF1DXcBWIGoYBM5M?utm_source=generator"
+allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+loading="lazy">
+</iframe>
+<button onclick="window.open('https://open.spotify.com/','_blank','noopener')">Buka Spotify</button>
 </div>
 
-<div class="buttons">
-<button class="secondary" onclick="pasteLink()">Tempel Link</button>
-<button class="secondary" onclick="clearLink()">Hapus Link</button>
+<div class="card">
+<h2>🎵 Pemutar Musik Sendiri</h2>
+<p class="muted">Pilih file MP3 dari HP untuk memutarnya di sini.</p>
+<input type="file" id="files" accept="audio/*" multiple>
+<div id="playlist"></div>
+<audio id="player" controls></audio>
+<p id="track" class="muted">Belum ada lagu dipilih.</p>
 </div>
+</section>
 
-<div id="status">Siap. Masukkan link video terlebih dahulu.</div>
+<section id="games">
+<div class="card">
+<h2>🎮 Anime Tap Challenge</h2>
+<p class="muted">Tekan target sebanyak mungkin sebelum waktu habis!</p>
+<div class="game">
+<p id="score">Skor: 0</p>
+<p id="time">Waktu: 15 detik</p>
+<div id="target" onclick="tap()">🎯</div>
+<button id="start" onclick="startGame()">MULAI GAME</button>
+<p id="message" class="muted">Siap menguji refleksmu?</p>
 </div>
-
-<div class="card" style="margin-top:16px">
-<h2>Cara Menggunakan</h2>
-<p class="desc">
-1. Salin link video.<br>
-2. Tempel link pada kotak di atas.<br>
-3. Pilih MP4 atau MP3.<br>
-4. Ikuti petunjuk dari sumber unduhan yang kompatibel.
-</p>
-<p class="desc">Gunakan untuk konten milikmu atau konten yang memang diizinkan untuk diunduh.</p>
 </div>
+<div class="card">
+<h2>🌑 Mini Game</h2>
+<p>Game ringan langsung di website, tanpa instalasi tambahan.</p>
+</div>
+</section>
 </main>
 
-<footer>© 2026 Mahes World</footer>
+<footer>MAHES WORLD © 2026 | BLACK & WHITE EDITION</footer>
 
 <script>
-const input = document.getElementById('url');
-const statusBox = document.getElementById('status');
-
-async function pasteLink(){
- try{
-  input.value = await navigator.clipboard.readText();
-  statusBox.textContent = input.value
-   ? 'Link berhasil ditempel. Pilih format unduhan.'
-   : 'Clipboard kosong.';
- }catch(e){
-  input.focus();
-  statusBox.textContent = 'Tekan lama kotak link, lalu pilih Tempel.';
- }
+function show(id,btn){
+ document.querySelectorAll('main section').forEach(s=>s.classList.remove('active'));
+ document.getElementById(id).classList.add('active');
+ document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+ btn.classList.add('active');
+ window.scrollTo({top:0,behavior:'smooth'});
 }
 
-function clearLink(){
- input.value='';
- statusBox.textContent='Link sudah dibersihkan.';
+const filesInput=document.getElementById('files');
+const playlist=document.getElementById('playlist');
+const player=document.getElementById('player');
+let songs=[],current=0;
+
+filesInput.addEventListener('change',()=>{
+ songs.forEach(s=>URL.revokeObjectURL(s.url));
+ songs=Array.from(filesInput.files).map(f=>({
+  name:f.name,url:URL.createObjectURL(f)
+ }));
+ playlist.innerHTML='';
+ songs.forEach((s,i)=>{
+  const b=document.createElement('button');
+  b.textContent='▶ '+s.name;
+  b.style.cssText='display:block;width:100%;margin:6px 0;text-align:left;overflow-wrap:anywhere';
+  b.onclick=()=>playSong(i);
+  playlist.appendChild(b);
+ });
+ if(songs.length)playSong(0);
+});
+
+function playSong(i){
+ current=i;
+ player.src=songs[i].url;
+ document.getElementById('track').textContent='Lagu: '+songs[i].name;
+ player.play().catch(()=>{});
 }
+player.addEventListener('ended',()=>{
+ if(current+1<songs.length)playSong(current+1);
+});
 
-function downloadMedia(format){
- const value=input.value.trim();
- if(!value){
-  statusBox.textContent='Masukkan link video terlebih dahulu.';
-  input.focus();
-  return;
- }
-
- let link;
- try{
-  link=new URL(value);
-  if(!['http:','https:'].includes(link.protocol)) throw Error();
- }catch(e){
-  statusBox.textContent='Link tidak valid. Periksa kembali URL kamu.';
-  return;
- }
-
- if(link.hostname==='localhost' || link.hostname==='127.0.0.1'){
-  statusBox.textContent='Gunakan link video publik yang valid.';
-  return;
- }
-
- statusBox.textContent=
-  'Link sudah diperiksa. Format yang dipilih: '+format.toUpperCase()+'. '+
-  'Untuk memproses link TikTok, layanan backend downloader yang kompatibel harus dihubungkan terlebih dahulu. '+
-  'Halaman GitHub Pages ini belum mengunduh file secara otomatis.';
+let score=0,time=15,running=false,timer;
+function startGame(){
+ clearInterval(timer);
+ score=0;time=15;running=true;
+ document.getElementById('score').textContent='Skor: 0';
+ document.getElementById('time').textContent='Waktu: 15 detik';
+ document.getElementById('message').textContent='GASSS!';
+ document.getElementById('start').disabled=true;
+ timer=setInterval(()=>{
+  time--;
+  document.getElementById('time').textContent='Waktu: '+time+' detik';
+  if(time<=0){
+   clearInterval(timer);running=false;
+   document.getElementById('message').textContent='Selesai! Skor kamu: '+score;
+   document.getElementById('start').disabled=false;
+  }
+ },1000);
+}
+function tap(){
+ if(!running)return;
+ score++;
+ document.getElementById('score').textContent='Skor: '+score;
+ document.getElementById('target').textContent=
+ ['🎯','⭐','🎵','🖤','⚡'][Math.floor(Math.random()*5)];
 }
 </script>
 </body>
