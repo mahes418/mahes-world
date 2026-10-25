@@ -4,197 +4,114 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Mahes World - MultiTools</title>
+<title>Mahes Downloader</title>
 <style>
 *{box-sizing:border-box}
-:root{--bg:#090916;--card:#17152c;--purple:#9b5cff;--text:#f8f5ff}
-body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}
-header{text-align:center;padding:32px 16px;background:linear-gradient(135deg,#21104c,#5416a0,#101027)}
-header h1{margin:0;font-size:32px}
-header p{color:#e0ccff}
-nav{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;padding:14px}
-button,.btn{border:0;background:var(--purple);color:white;padding:11px 15px;border-radius:10px;font-weight:bold;cursor:pointer;text-decoration:none}
-nav button{background:#201a39}
-nav button.active{background:var(--purple)}
-main{max-width:850px;margin:auto;padding:16px}
-.card{background:var(--card);border:1px solid #393052;border-radius:17px;padding:20px;margin:14px 0;box-shadow:0 8px 30px #0004}
-h2{margin-top:0;color:#c7a2ff}
-input,select{width:100%;padding:13px;border-radius:9px;border:1px solid #51436e;background:#0d0b1b;color:white;margin:8px 0}
-.tool{display:none}.tool.show{display:block}
-.result{padding:12px;background:#0d0b1b;border-radius:10px;margin-top:12px;overflow-wrap:anywhere}
-.gamebox{text-align:center;background:#0d0b1b;padding:20px;border-radius:12px}
-#target{font-size:48px;padding:18px;cursor:pointer}
-footer{text-align:center;padding:25px;color:#aaa;font-size:13px}
-small{color:#c8b9e6}
+body{margin:0;background:#080808;color:#fff;font-family:Arial,sans-serif}
+header{padding:27px 15px;text-align:center;border-bottom:1px solid #333}
+header h1{font-size:29px;margin:0 0 9px}
+header p{color:#aaa;margin:0}
+main{max-width:600px;margin:35px auto;padding:16px}
+.card{border:1px solid #333;background:#111;border-radius:18px;padding:23px}
+h2{font-size:21px}
+.desc{color:#aaa;line-height:1.6;font-size:14px}
+input{width:100%;padding:15px;background:#080808;color:white;border:1px solid #555;border-radius:10px;font-size:15px;margin:12px 0}
+.buttons{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}
+button{padding:14px 8px;background:#fff;color:#000;border:0;border-radius:9px;font-size:14px;font-weight:bold;cursor:pointer}
+button:active{opacity:.7}
+.secondary{background:#222;color:white;border:1px solid #555}
+#status{margin-top:18px;padding:13px;border-radius:9px;background:#080808;color:#ccc;overflow-wrap:anywhere;line-height:1.5}
+footer{text-align:center;color:#777;font-size:12px;padding:25px}
+a{color:white}
 </style>
 </head>
 <body>
 <header>
-<h1>🌌 MAHES WORLD</h1>
-<p>All-in-One MultiTools Center</p>
-<small>One website. Many possibilities.</small>
+<h1>MAHES DOWNLOADER</h1>
+<p>Simple. Fast. Black & White.</p>
 </header>
 
-<nav>
-<button class="active" onclick="openTool('home',this)">🏠 Home</button>
-<button onclick="openTool('video',this)">🎬 MP4</button>
-<button onclick="openTool('audio',this)">🎵 MP3</button>
-<button onclick="openTool('spotify',this)">🎧 Spotify</button>
-<button onclick="openTool('qr',this)">🔳 QR Code</button>
-<button onclick="openTool('game',this)">🎮 Game</button>
-</nav>
-
 <main>
-<section id="home" class="tool show">
 <div class="card">
-<h2>👋 Welcome to Mahes World!</h2>
-<p>Website multifungsi buatan Mahes. Pilih alat favoritmu di atas!</p>
-</div>
-<div class="card">
-<h2>🚀 Quick Tools</h2>
-<p>🎬 Video • 🎵 Audio • 🎧 Musik • 🔳 QR Code • 🎮 Mini Game</p>
-<button onclick="openTool('qr',document.querySelectorAll('nav button')[4])">Coba QR Generator</button>
-</div>
-<div class="card">
-<h2>✨ Status</h2>
-<p>🟢 Website siap digunakan</p>
-<p>💜 Dark Neon Edition</p>
-</div>
-</section>
+<h2>Download Video / Audio</h2>
+<p class="desc">Tempel link video di bawah ini untuk memulai.</p>
 
-<section id="video" class="tool">
-<div class="card">
-<h2>🎬 Video Downloader</h2>
-<p>Tempel tautan video yang menyediakan unduhan resmi.</p>
-<input id="videoUrl" placeholder="https://contoh.com/video.mp4">
-<button onclick="openMedia('videoUrl')">Buka Video</button>
-<p><small>Untuk video yang kamu miliki atau yang mengizinkan unduhan. Tautan streaming biasa belum tentu bisa diunduh.</small></p>
-</div>
-</section>
+<input id="url" type="url" placeholder="Tempel link TikTok di sini...">
 
-<section id="audio" class="tool">
-<div class="card">
-<h2>🎵 MP3 / Audio</h2>
-<p>Buka audio dari tautan langsung atau file lokal milikmu.</p>
-<input id="audioUrl" placeholder="https://contoh.com/audio.mp3">
-<button onclick="playAudioUrl()">Putar Audio</button>
-<div id="audioPlayer"></div>
-<p>Atau pilih file audio dari perangkat:</p>
-<input type="file" accept="audio/*" onchange="playLocal(this,'audioPlayer')">
+<div class="buttons">
+<button onclick="downloadMedia('mp4')">↓ Download MP4</button>
+<button onclick="downloadMedia('mp3')">♫ Download MP3</button>
 </div>
-</section>
 
-<section id="spotify" class="tool">
-<div class="card">
-<h2>🎧 Spotify</h2>
-<p>Buka Spotify untuk mencari musik favoritmu.</p>
-<a class="btn" href="https://open.spotify.com/" target="_blank" rel="noopener">Buka Spotify ↗</a>
-<div style="margin-top:20px">
-<iframe title="Spotify Embed" style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DXcBWIGoYBM5M" width="100%" height="352" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+<div class="buttons">
+<button class="secondary" onclick="pasteLink()">Tempel Link</button>
+<button class="secondary" onclick="clearLink()">Hapus Link</button>
 </div>
-<small>Beberapa fitur pemutaran mungkin memerlukan login Spotify.</small>
-</div>
-</section>
 
-<section id="qr" class="tool">
-<div class="card">
-<h2>🔳 QR Code Generator</h2>
-<p>Masukkan teks atau tautan untuk membuat QR.</p>
-<input id="qrText" placeholder="https://mahes418.github.io/mahes-world/">
-<button onclick="makeQR()">Buat QR Code</button>
-<div id="qrResult" class="result" style="text-align:center">QR Code akan muncul di sini.</div>
+<div id="status">Siap. Masukkan link video terlebih dahulu.</div>
 </div>
-</section>
 
-<section id="game" class="tool">
-<div class="card">
-<h2>🎮 Quick Tap Challenge</h2>
-<p>Tekan tombol target sebanyak mungkin dalam 10 detik!</p>
-<div class="gamebox">
-<p id="score">Skor: 0</p>
-<p id="timer">Waktu: 10 detik</p>
-<div id="target" onclick="tapTarget()">🎯</div>
-<button id="startBtn" onclick="startGame()">Mulai Game</button>
-<p id="gameMsg"></p>
+<div class="card" style="margin-top:16px">
+<h2>Cara Menggunakan</h2>
+<p class="desc">
+1. Salin link video.<br>
+2. Tempel link pada kotak di atas.<br>
+3. Pilih MP4 atau MP3.<br>
+4. Ikuti petunjuk dari sumber unduhan yang kompatibel.
+</p>
+<p class="desc">Gunakan untuk konten milikmu atau konten yang memang diizinkan untuk diunduh.</p>
 </div>
-</div>
-</section>
 </main>
 
-<footer>© 2026 Mahes World • Made with 💜 by Mahes</footer>
+<footer>© 2026 Mahes World</footer>
 
 <script>
-function openTool(id,btn){
- document.querySelectorAll('.tool').forEach(x=>x.classList.remove('show'));
- document.getElementById(id).classList.add('show');
- document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active'));
- if(btn)btn.classList.add('active');
- window.scrollTo({top:0,behavior:'smooth'});
-}
-function openMedia(id){
- const value=document.getElementById(id).value.trim();
- if(!value)return alert('Masukkan tautan terlebih dahulu!');
+const input = document.getElementById('url');
+const statusBox = document.getElementById('status');
+
+async function pasteLink(){
  try{
-  const u=new URL(value);
-  if(u.protocol!=='https:'&&u.protocol!=='http:')throw Error();
-  window.open(u.href,'_blank','noopener');
- }catch(e){alert('Tautan tidak valid.');}
-}
-function playAudioUrl(){
- const value=document.getElementById('audioUrl').value.trim();
- if(!value)return alert('Masukkan tautan audio!');
- const box=document.getElementById('audioPlayer');
- box.innerHTML='';
- const a=document.createElement('audio');
- a.controls=true;a.style.width='100%';a.src=value;
- box.appendChild(a);
- a.play().catch(()=>alert('Audio tidak dapat diputar dari tautan ini.'));
-}
-function playLocal(input,id){
- const box=document.getElementById(id);
- box.innerHTML='';
- if(input.files[0]){
-  const a=document.createElement('audio');
-  a.controls=true;a.style.width='100%';
-  a.src=URL.createObjectURL(input.files[0]);
-  box.appendChild(a);
+  input.value = await navigator.clipboard.readText();
+  statusBox.textContent = input.value
+   ? 'Link berhasil ditempel. Pilih format unduhan.'
+   : 'Clipboard kosong.';
+ }catch(e){
+  input.focus();
+  statusBox.textContent = 'Tekan lama kotak link, lalu pilih Tempel.';
  }
 }
-function makeQR(){
- const text=document.getElementById('qrText').value.trim();
- if(!text)return alert('Masukkan teks atau tautan!');
- const box=document.getElementById('qrResult');
- box.textContent='Membuat QR Code...';
- const img=document.createElement('img');
- img.alt='QR Code';img.width=220;img.height=220;
- img.style.maxWidth='100%';
- img.referrerPolicy='no-referrer';
- img.src='https://api.qrserver.com/v1/create-qr-code/?size=220x220&data='+encodeURIComponent(text);
- img.onload=()=>{box.replaceChildren(img);const a=document.createElement('a');a.href=img.src;a.download='mahes-world-qr.png';a.className='btn';a.textContent='Simpan QR';a.style.display='inline-block';a.style.marginTop='12px';box.appendChild(document.createElement('br'));box.appendChild(a)};
- img.onerror=()=>{box.textContent='QR gagal dibuat. Periksa koneksi internet.'};
+
+function clearLink(){
+ input.value='';
+ statusBox.textContent='Link sudah dibersihkan.';
 }
-let score=0,time=10,playing=false,gameInterval;
-function startGame(){
- clearInterval(gameInterval);score=0;time=10;playing=true;
- document.getElementById('score').textContent='Skor: 0';
- document.getElementById('timer').textContent='Waktu: 10 detik';
- document.getElementById('gameMsg').textContent='GAS TEKAN TARGET!';
- document.getElementById('startBtn').disabled=true;
- gameInterval=setInterval(()=>{
-  time--;
-  document.getElementById('timer').textContent='Waktu: '+time+' detik';
-  if(time<=0){
-   clearInterval(gameInterval);playing=false;
-   document.getElementById('gameMsg').textContent='Selesai! Skor akhir: '+score;
-   document.getElementById('startBtn').disabled=false;
-  }
- },1000);
-}
-function tapTarget(){
- if(!playing)return;
- score++;
- document.getElementById('score').textContent='Skor: '+score;
- document.getElementById('target').textContent=['🎯','⭐','💎','🔥'][Math.floor(Math.random()*4)];
+
+function downloadMedia(format){
+ const value=input.value.trim();
+ if(!value){
+  statusBox.textContent='Masukkan link video terlebih dahulu.';
+  input.focus();
+  return;
+ }
+
+ let link;
+ try{
+  link=new URL(value);
+  if(!['http:','https:'].includes(link.protocol)) throw Error();
+ }catch(e){
+  statusBox.textContent='Link tidak valid. Periksa kembali URL kamu.';
+  return;
+ }
+
+ if(link.hostname==='localhost' || link.hostname==='127.0.0.1'){
+  statusBox.textContent='Gunakan link video publik yang valid.';
+  return;
+ }
+
+ statusBox.textContent=
+  'Link sudah diperiksa. Format yang dipilih: '+format.toUpperCase()+'. '+
+  'Untuk memproses link TikTok, layanan backend downloader yang kompatibel harus dihubungkan terlebih dahulu. '+
+  'Halaman GitHub Pages ini belum mengunduh file secara otomatis.';
 }
 </script>
 </body>
