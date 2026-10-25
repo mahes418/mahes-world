@@ -4,31 +4,222 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Website Gue</title>
+<title>Mahes World 🎮</title>
 <style>
-body {
-  background: #080d18;
-  color: white;
-  font-family: Arial, sans-serif;
-  text-align: center;
-  padding: 50px 15px;
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  color:white;
+  background:linear-gradient(135deg,#090b20,#151047,#25105a);
+  min-height:100vh;
 }
-h1 { color: #00e5ff; }
-button {
-  padding: 14px 20px;
-  background: #00e5ff;
-  border: 0;
-  border-radius: 10px;
-  font-weight: bold;
+header{text-align:center;padding:35px 15px 20px}
+h1{
+  font-size:38px;margin:0;
+  background:linear-gradient(90deg,#00eeff,#d88bff,#ff65bd);
+  color:transparent;background-clip:text;
 }
+header p{color:#c8c5ff}
+nav{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+button{
+  border:1px solid #7770ff;
+  border-radius:12px;padding:12px 17px;
+  color:white;background:#28205b;
+  cursor:pointer;font-weight:bold;
+}
+button:active{transform:scale(.96)}
+main{max-width:900px;margin:auto;padding:20px}
+.hero{
+  padding:25px;border:1px solid #5148a0;
+  border-radius:20px;background:#ffffff0c;
+  text-align:center;margin-bottom:25px;
+}
+.hero h2{font-size:27px}
+.cards{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));
+  gap:14px;
+}
+.card{
+  padding:20px 12px;text-align:center;
+  background:#ffffff0d;border:1px solid #49417d;
+  border-radius:18px;transition:.2s;
+}
+.card:hover{transform:translateY(-5px);background:#342766}
+.emoji{font-size:42px}
+.card h3{margin:12px 0 8px}
+.card p{color:#c8c5df;font-size:13px}
+#game{
+  display:none;text-align:center;margin-top:22px;
+  padding:22px;border-radius:18px;background:#11102d;
+}
+#score{font-size:24px;color:#5fffe0}
+#target{font-size:55px;padding:10px}
+footer{text-align:center;padding:25px;color:#a9a5cf}
 </style>
 </head>
 <body>
-<h1>🔥 WEBSITE GUE 🔥</h1>
-<p>Halo teman-teman!</p>
-<p>Selamat datang di website pertama gue.</p>
-<button onclick="alert('Website berhasil! 🚀')">
-KLIK DI SINI
-</button>
+<header>
+  <h1>MAHES WORLD</h1>
+  <p>🚀 Your World. Your Game. Your Adventure.</p>
+  <nav>
+    <button onclick="home()">🏠 Home</button>
+    <button onclick="showGames()">🎮 Games</button>
+    <button onclick="music()">🎵 Musik</button>
+  </nav>
+</header>
+
+<main>
+  <section class="hero">
+    <h2>WELCOME TO MY WORLD ✨</h2>
+    <p>Tempat bermain, bersantai, dan menaklukkan tantangan!</p>
+    <button onclick="showGames()">MULAI BERMAIN 🚀</button>
+  </section>
+
+  <h2>🎮 Pilih Game Kamu</h2>
+  <section class="cards">
+    <div class="card">
+      <div class="emoji">🎯</div>
+      <h3>Tap Challenge</h3>
+      <p>Seberapa cepat kamu mengetuk?</p>
+      <button onclick="startGame()">Mainkan</button>
+    </div>
+    <div class="card">
+      <div class="emoji">🧠</div>
+      <h3>Tebak Angka</h3>
+      <p>Temukan angka rahasia!</p>
+      <button onclick="guessGame()">Mainkan</button>
+    </div>
+    <div class="card">
+      <div class="emoji">🌌</div>
+      <h3>Space World</h3>
+      <p>Jelajahi dunia luar angkasa.</p>
+      <button onclick="spaceGame()">Jelajahi</button>
+    </div>
+  </section>
+
+  <section id="game">
+    <h2 id="gameTitle">🎯 Tap Challenge</h2>
+    <p id="instructions">Tekan target sebanyak mungkin!</p>
+    <div id="score">Skor: 0</div>
+    <div id="target">🎯</div>
+    <button id="action" onclick="tap()">TAP!</button>
+    <p id="result"></p>
+    <button onclick="closeGame()">Tutup Game</button>
+  </section>
+
+  <section style="text-align:center;margin-top:25px">
+    <h2>🎵 Music Corner</h2>
+    <p id="musicStatus">Musik santai dengan nada buatan browser.</p>
+    <button onclick="music()">▶ Putar / Hentikan Musik</button>
+  </section>
+</main>
+
+<footer>Made with ❤️ by Mahes | © 2026 Mahes World</footer>
+
+<script>
+let score=0,secret=0,mode="tap",playing=false;
+let audio=null,osc=null,gain=null;
+
+function home(){
+  document.getElementById("game").style.display="none";
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+function showGames(){
+  document.querySelector(".cards").scrollIntoView({behavior:"smooth"});
+}
+function startGame(){
+  mode="tap";score=0;playing=true;
+  document.getElementById("game").style.display="block";
+  document.getElementById("gameTitle").textContent="🎯 Tap Challenge";
+  document.getElementById("instructions").textContent="Kumpulkan skor sebanyak mungkin!";
+  document.getElementById("target").textContent="🎯";
+  document.getElementById("action").textContent="TAP!";
+  document.getElementById("result").textContent="";
+  updateScore();
+  document.getElementById("game").scrollIntoView({behavior:"smooth"});
+}
+function tap(){
+  if(!playing||mode!=="tap")return;
+  score++;
+  updateScore();
+  document.getElementById("target").textContent=
+    ["🎯","⚡","💎","🔥","⭐"][Math.floor(Math.random()*5)];
+}
+function updateScore(){
+  document.getElementById("score").textContent="Skor: "+score;
+}
+function guessGame(){
+  mode="guess";playing=true;score=0;
+  secret=Math.floor(Math.random()*10)+1;
+  document.getElementById("game").style.display="block";
+  document.getElementById("gameTitle").textContent="🧠 Tebak Angka";
+  document.getElementById("instructions").textContent="Tebak angka dari 1 sampai 10.";
+  document.getElementById("target").textContent="❓";
+  document.getElementById("action").textContent="Tebak!";
+  document.getElementById("result").textContent="";
+  document.getElementById("score").textContent="Kesempatan: 3";
+  score=3;
+  document.getElementById("game").scrollIntoView({behavior:"smooth"});
+}
+function spaceGame(){
+  mode="space";playing=false;
+  document.getElementById("game").style.display="block";
+  document.getElementById("gameTitle").textContent="🌌 Space World";
+  document.getElementById("instructions").textContent="Kamu adalah penjelajah galaksi!";
+  document.getElementById("target").textContent="🚀";
+  document.getElementById("score").textContent="Misi: Jelajahi bintang";
+  document.getElementById("action").textContent="Temukan Bintang";
+  document.getElementById("result").textContent="Galaksi masih luas. Semangat, Kapten Mahes!";
+  document.getElementById("game").scrollIntoView({behavior:"smooth"});
+}
+document.getElementById("action").onclick=function(){
+  if(mode==="tap"){tap();return;}
+  if(mode==="guess"){
+    let answer=prompt("Masukkan angka 1–10:");
+    if(answer===null)return;
+    if(Number(answer)===secret){
+      document.getElementById("result").textContent="BENAR! Kamu menang! 🏆";
+      document.getElementById("target").textContent="🏆";
+      playing=false;
+    }else{
+      score--;
+      document.getElementById("score").textContent="Kesempatan: "+score;
+      document.getElementById("result").textContent=
+        score>0?(Number(answer)<secret?"Terlalu kecil!":"Terlalu besar!"):"Kesempatan habis! Angkanya "+secret;
+      if(score<=0)playing=false;
+    }
+    return;
+  }
+  if(mode==="space"){
+    document.getElementById("target").textContent=
+      ["🌟","🪐","☄️","🌙"][Math.floor(Math.random()*4)];
+    document.getElementById("result").textContent="Bintang baru ditemukan! ✨";
+  }
+};
+function closeGame(){
+  playing=false;
+  document.getElementById("game").style.display="none";
+}
+function music(){
+  try{
+    if(audio){
+      audio.close();audio=null;
+      document.getElementById("musicStatus").textContent="Musik dihentikan.";
+      return;
+    }
+    audio=new (window.AudioContext||window.webkitAudioContext)();
+    osc=audio.createOscillator();
+    gain=audio.createGain();
+    osc.type="sine";osc.frequency.value=261.63;
+    gain.gain.value=0.035;
+    osc.connect(gain);gain.connect(audio.destination);
+    osc.start();
+    document.getElementById("musicStatus").textContent="🎵 Nada elektronik sedang diputar.";
+  }catch(e){
+    document.getElementById("musicStatus").textContent="Browser belum mendukung audio.";
+  }
+}
+</script>
 </body>
 </html>
