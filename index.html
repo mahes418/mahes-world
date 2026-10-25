@@ -115,7 +115,266 @@ footer{text-align:center;padding:25px;color:#a9a5cf}
   </section>
 </main>
 
-<footer>Made with ❤️ by Mahes | © 2026 Mahes World</footer>
+<section id="mahes-music">
+  <h2>🎧 Mahes Music</h2>
+  <p>Music mode: ON 🎮</p>
+
+  <form id="music-search">
+    <input
+      id="music-query"
+      type="search"
+      placeholder="Cari lagu di YouTube..."
+      aria-label="Cari lagu"
+      required
+    >
+    <button type="submit">🔎 Cari</button>
+  </form>
+
+  <div id="yt-player"></div>
+
+  <div class="music-controls">
+    <button id="music-play">▶ Putar</button>
+    <button id="music-pause">⏸ Jeda</button>
+    <label>
+      Volume
+      <input id="music-volume" type="range"
+        min="0" max="100" value="60">
+    </label>
+  </div>
+
+  <h3>📃 Playlist-ku</h3>
+  <p id="music-status">Cari lagu atau tambahkan video dari YouTube.</p>
+  <div id="music-results"></div>
+  <ol id="music-playlist"></ol>
+
+  <button id="music-clear">Kosongkan playlist</button>
+  <p class="music-note">
+    Pemutaran menggunakan YouTube. Ketersediaan video
+    bergantung pada pengaturan pemiliknya.
+  </p>
+</section>
+
+<style>
+#mahes-music {
+  margin: 28px 0;
+  padding: 20px;
+  color: white;
+  background: linear-gradient(145deg,#11102d,#25104a);
+  border: 1px solid #7160ff;
+  border-radius: 20px;
+  font-family: Arial,sans-serif;
+}
+#mahes-music input[type="search"] {
+  width: 100%;
+  min-width: 0;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #8273ff;
+  background: #17152e;
+  color: white;
+  margin-bottom: 10px;
+}
+#mahes-music button {
+  margin: 4px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  color: white;
+  background: #4c32a8;
+  border: 1px solid #9b86ff;
+}
+#yt-player {
+  width: 100%;
+  aspect-ratio: 16/9;
+  margin: 14px 0;
+  background: #090816;
+  border-radius: 12px;
+  overflow: hidden;
+}
+#yt-player iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+.music-controls {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.music-controls label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+#music-playlist li,
+#music-results li {
+  margin: 10px 0;
+  padding: 10px;
+  background: #ffffff10;
+  border-radius: 10px;
+  overflow-wrap: anywhere;
+}
+#mahes-music .music-note {
+  color: #c9c0eb;
+  font-size: 12px;
+}
+</style>
+
+<script>
+(function () {
+  const $ = id => document.getElementById(id);
+  const playlist = [];
+  let player = null;
+  let ready = false;
+  let current = -1;
+
+  function status(message) {
+    $("music-status").textContent = message;
+  }
+
+  function loadVideo(id) {
+    if (!ready || !player) {
+      status("Pemutar masih dimuat. Coba sebentar lagi.");
+      return;
+    }
+    current = playlist.findIndex(item => item.id === id);
+    player.loadVideoById(id);
+    status("Memuat video YouTube...");
+    renderPlaylist();
+  }
+
+  function renderPlaylist() {
+    const list = $("music-playlist");
+    list.replaceChildren();
+
+    playlist.forEach((item, index) => {
+      const li = document.createElement("li");
+      const btn = document.createElement("button");
+      btn.textContent =
+        (index === current ? "▶ " : "") + item.title;
+      btn.addEventListener("click", () => loadVideo(item.id));
+      li.appendChild(btn);
+      list.appendChild(li);
+    });
+  }
+
+  function addVideo(id, title) {
+    if (playlist.some(item => item.id === id)) {
+      status("Lagu itu sudah ada di playlist.");
+      return;
+    }
+    playlist.push({ id, title });
+    renderPlaylist();
+    status("Ditambahkan ke playlist: " + title);
+  }
+
+  $("music-search").addEventListener("submit", event => {
+    event.preventDefault();
+    const query = $("music-query").value.trim();
+    if (!query) return;
+
+    const url =
+      "https://www.youtube.com/results?search_query=" +
+      encodeURIComponent(query);
+
+    window.open(url, "_blank", "noopener");
+    status("Pilih video di YouTube, lalu tambahkan ID videonya.");
+  });
+
+  $("music-play").addEventListener("click", () => {
+    if (ready && player) player.playVideo();
+    else status("Tunggu sampai pemutar siap.");
+  });
+
+  $("music-pause").addEventListener("click", () => {
+    if (ready && player) player.pauseVideo();
+  });
+
+  $("music-volume").addEventListener("input", event => {
+    if (ready && player) {
+      player.setVolume(Number(event.target.value));
+    }
+  });
+
+  $("music-clear").addEventListener("click", () => {
+    playlist.length = 0;
+    current = -1;
+    renderPlaylist();
+    status("Playlist dikosongkan.");
+  });
+
+  // Pilih video YouTube untuk memasukkannya ke playlist.
+  const add = document.createElement("form");
+  add.innerHTML =
+    '<h3>➕ Tambah video</h3>' +
+    '<input id="music-video-url" type="url" ' +
+    'placeholder="Tempel URL video YouTube" required>' +
+    '<button type="submit">Tambah ke playlist</button>';
+  $("music-results").appendChild(add);
+
+  add.addEventListener("submit", event => {
+    event.preventDefault();
+    const url = $("music-video-url").value.trim();
+    let parsed;
+    try { parsed = new URL(url); }
+    catch {
+      status("URL tidak valid.");
+      return;
+    }
+
+    let id = "";
+    if (parsed.hostname === "youtu.be") {
+      id = parsed.pathname.slice(1);
+    } else if (
+      parsed.hostname === "youtube.com" ||
+      parsed.hostname.endsWith(".youtube.com")
+    ) {
+      id = parsed.searchParams.get("v") || "";
+      if (parsed.pathname.startsWith("/embed/")) {
+        id = parsed.pathname.split("/")[2] || "";
+      }
+      if (parsed.pathname.startsWith("/shorts/")) {
+        id = parsed.pathname.split("/")[2] || "";
+      }
+    }
+
+    if (!/^[\w-]{11}$/.test(id)) {
+      status("URL video tidak dikenali. Tempel URL video biasa.");
+      return;
+    }
+
+    addVideo(id, "Video " + id);
+    if (ready && current === -1) loadVideo(id);
+    $("music-video-url").value = "";
+  });
+
+  window.onYouTubeIframeAPIReady = function () {
+    player = new YT.Player("yt-player", {
+      width: "100%",
+      height: "100%",
+      videoId: "",
+      playerVars: { playsinline: 1 },
+      events: {
+        onReady: function (event) {
+          ready = true;
+          event.target.setVolume(60);
+          status("Siap! Tambahkan video YouTube ke playlist.");
+        },
+        onError: function () {
+          status("Video tidak dapat diputar. Coba video lain.");
+        }
+      }
+    });
+  };
+
+  const api = document.createElement("script");
+  api.src = "https://www.youtube.com/iframe_api";
+  api.async = true;
+  document.head.appendChild(api);
+})();
+</script>
+  
+<footer>Made with by Mahes | © 2026 Mahes World</footer>
 
 <script>
 let score=0,secret=0,mode="tap",playing=false;
