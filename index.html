@@ -1,201 +1,201 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Mahes World - Game Center</title>
+<title>Mahes World - MultiTools</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;color:white;background:linear-gradient(135deg,#080b20,#171044,#30105a);min-height:100vh}
-header{text-align:center;padding:30px 15px}
-h1{font-size:36px;background:linear-gradient(90deg,#00eeff,#d88bff,#ff65bd);color:transparent;background-clip:text;margin:0}
-header p{color:#ccc5ff}
-nav{display:flex;justify-content:center;gap:8px;flex-wrap:wrap}
-button{border:1px solid #8170ff;border-radius:11px;padding:11px 15px;color:white;background:#332366;cursor:pointer;font-weight:bold;margin:4px}
-button:active{transform:scale(.96)}
-main{max-width:900px;margin:auto;padding:16px}
-.hero,.card,#game,#music{background:#ffffff0c;border:1px solid #5148a0;border-radius:18px;padding:20px;margin-bottom:18px}
-.hero{text-align:center}
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}
-.card{text-align:center;margin:0}
-.emoji{font-size:42px}
-.card p{color:#ccc5df;font-size:13px}
-#game{display:none;text-align:center;margin-top:20px}
-#score{font-size:23px;color:#5fffe0}
-#target{font-size:48px;padding:10px}
-#music input{width:100%;padding:12px;border-radius:10px;border:1px solid #8170ff;background:#17152e;color:white;margin:6px 0}
-#player{width:100%;aspect-ratio:16/9;background:#090816;margin:14px 0;border-radius:12px;overflow:hidden}
-#player iframe{width:100%;height:100%;border:0}
-#playlist button{max-width:100%;overflow-wrap:anywhere}
-#status{color:#c9c0eb;font-size:14px}
-footer{text-align:center;padding:25px;color:#aaa5cf;font-size:13px}
+:root{--bg:#090916;--card:#17152c;--purple:#9b5cff;--text:#f8f5ff}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}
+header{text-align:center;padding:32px 16px;background:linear-gradient(135deg,#21104c,#5416a0,#101027)}
+header h1{margin:0;font-size:32px}
+header p{color:#e0ccff}
+nav{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;padding:14px}
+button,.btn{border:0;background:var(--purple);color:white;padding:11px 15px;border-radius:10px;font-weight:bold;cursor:pointer;text-decoration:none}
+nav button{background:#201a39}
+nav button.active{background:var(--purple)}
+main{max-width:850px;margin:auto;padding:16px}
+.card{background:var(--card);border:1px solid #393052;border-radius:17px;padding:20px;margin:14px 0;box-shadow:0 8px 30px #0004}
+h2{margin-top:0;color:#c7a2ff}
+input,select{width:100%;padding:13px;border-radius:9px;border:1px solid #51436e;background:#0d0b1b;color:white;margin:8px 0}
+.tool{display:none}.tool.show{display:block}
+.result{padding:12px;background:#0d0b1b;border-radius:10px;margin-top:12px;overflow-wrap:anywhere}
+.gamebox{text-align:center;background:#0d0b1b;padding:20px;border-radius:12px}
+#target{font-size:48px;padding:18px;cursor:pointer}
+footer{text-align:center;padding:25px;color:#aaa;font-size:13px}
+small{color:#c8b9e6}
 </style>
 </head>
 <body>
 <header>
-<h1>MAHES WORLD</h1>
-<p>🚀 Your World. Your Game. Your Adventure.</p>
-<nav>
-<button onclick="home()">🏠 Home</button>
-<button onclick="games()">🎮 Games</button>
-<button onclick="musicSection()">🎵 Musik</button>
-</nav>
+<h1>🌌 MAHES WORLD</h1>
+<p>All-in-One MultiTools Center</p>
+<small>One website. Many possibilities.</small>
 </header>
 
+<nav>
+<button class="active" onclick="openTool('home',this)">🏠 Home</button>
+<button onclick="openTool('video',this)">🎬 MP4</button>
+<button onclick="openTool('audio',this)">🎵 MP3</button>
+<button onclick="openTool('spotify',this)">🎧 Spotify</button>
+<button onclick="openTool('qr',this)">🔳 QR Code</button>
+<button onclick="openTool('game',this)">🎮 Game</button>
+</nav>
+
 <main>
-<section class="hero" id="home">
-<h2>WELCOME TO MY WORLD ✨</h2>
-<p>Tempat bermain, bersantai, dan menaklukkan tantangan!</p>
-<button onclick="games()">MULAI BERMAIN 🚀</button>
-</section>
-
-<h2 id="games-title">🎮 Pilih Game Kamu</h2>
-<section class="cards">
-<div class="card"><div class="emoji">🎯</div><h3>Tap Challenge</h3><p>Uji kecepatan jarimu!</p><button onclick="startTap()">Mainkan</button></div>
-<div class="card"><div class="emoji">🧠</div><h3>Tebak Angka</h3><p>Tebak angka rahasia 1–10.</p><button onclick="startGuess()">Mainkan</button></div>
-<div class="card"><div class="emoji">🌌</div><h3>Space World</h3><p>Jelajahi galaksi!</p><button onclick="startSpace()">Jelajahi</button></div>
-</section>
-
-<section id="game">
-<h2 id="game-title">🎮 Game</h2>
-<p id="instructions"></p>
-<div id="score">Skor: 0</div>
-<div id="target">🎯</div>
-<button id="action" onclick="act()">Mulai!</button>
-<p id="result"></p>
-<button onclick="closeGame()">Tutup Game</button>
-</section>
-
-<section id="music">
-<h2>🎧 Mahes Music</h2>
-<p>Putar lagu YouTube tanpa meninggalkan website!</p>
-<form id="search-form">
-<input id="search" type="search" placeholder="Cari nama lagu..." required>
-<button type="submit">🔎 Cari di YouTube</button>
-</form>
-<p id="status">Tempel link video YouTube untuk mulai.</p>
-<div id="player"></div>
-<form id="add-form">
-<input id="video-url" type="url" placeholder="Tempel link video YouTube di sini" required>
-<button type="submit">➕ Tambah & Putar</button>
-</form>
-<div>
-<button onclick="playSong()">▶ Putar</button>
-<button onclick="pauseSong()">⏸ Jeda</button>
-<button onclick="changeVolume(-10)">🔉 Volume −</button>
-<button onclick="changeVolume(10)">🔊 Volume +</button>
+<section id="home" class="tool show">
+<div class="card">
+<h2>👋 Welcome to Mahes World!</h2>
+<p>Website multifungsi buatan Mahes. Pilih alat favoritmu di atas!</p>
 </div>
-<h3>📃 Playlist</h3>
-<div id="playlist"></div>
+<div class="card">
+<h2>🚀 Quick Tools</h2>
+<p>🎬 Video • 🎵 Audio • 🎧 Musik • 🔳 QR Code • 🎮 Mini Game</p>
+<button onclick="openTool('qr',document.querySelectorAll('nav button')[4])">Coba QR Generator</button>
+</div>
+<div class="card">
+<h2>✨ Status</h2>
+<p>🟢 Website siap digunakan</p>
+<p>💜 Dark Neon Edition</p>
+</div>
+</section>
+
+<section id="video" class="tool">
+<div class="card">
+<h2>🎬 Video Downloader</h2>
+<p>Tempel tautan video yang menyediakan unduhan resmi.</p>
+<input id="videoUrl" placeholder="https://contoh.com/video.mp4">
+<button onclick="openMedia('videoUrl')">Buka Video</button>
+<p><small>Untuk video yang kamu miliki atau yang mengizinkan unduhan. Tautan streaming biasa belum tentu bisa diunduh.</small></p>
+</div>
+</section>
+
+<section id="audio" class="tool">
+<div class="card">
+<h2>🎵 MP3 / Audio</h2>
+<p>Buka audio dari tautan langsung atau file lokal milikmu.</p>
+<input id="audioUrl" placeholder="https://contoh.com/audio.mp3">
+<button onclick="playAudioUrl()">Putar Audio</button>
+<div id="audioPlayer"></div>
+<p>Atau pilih file audio dari perangkat:</p>
+<input type="file" accept="audio/*" onchange="playLocal(this,'audioPlayer')">
+</div>
+</section>
+
+<section id="spotify" class="tool">
+<div class="card">
+<h2>🎧 Spotify</h2>
+<p>Buka Spotify untuk mencari musik favoritmu.</p>
+<a class="btn" href="https://open.spotify.com/" target="_blank" rel="noopener">Buka Spotify ↗</a>
+<div style="margin-top:20px">
+<iframe title="Spotify Embed" style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DXcBWIGoYBM5M" width="100%" height="352" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+</div>
+<small>Beberapa fitur pemutaran mungkin memerlukan login Spotify.</small>
+</div>
+</section>
+
+<section id="qr" class="tool">
+<div class="card">
+<h2>🔳 QR Code Generator</h2>
+<p>Masukkan teks atau tautan untuk membuat QR.</p>
+<input id="qrText" placeholder="https://mahes418.github.io/mahes-world/">
+<button onclick="makeQR()">Buat QR Code</button>
+<div id="qrResult" class="result" style="text-align:center">QR Code akan muncul di sini.</div>
+</div>
+</section>
+
+<section id="game" class="tool">
+<div class="card">
+<h2>🎮 Quick Tap Challenge</h2>
+<p>Tekan tombol target sebanyak mungkin dalam 10 detik!</p>
+<div class="gamebox">
+<p id="score">Skor: 0</p>
+<p id="timer">Waktu: 10 detik</p>
+<div id="target" onclick="tapTarget()">🎯</div>
+<button id="startBtn" onclick="startGame()">Mulai Game</button>
+<p id="gameMsg"></p>
+</div>
+</div>
 </section>
 </main>
 
-<footer>MAHES WORLD // GAME CENTER © 2026</footer>
+<footer>© 2026 Mahes World • Made with 💜 by Mahes</footer>
 
 <script>
-let mode="tap",score=0,secret=0,tries=3,playing=false;
-function home(){document.getElementById("home").scrollIntoView({behavior:"smooth"})}
-function games(){document.getElementById("games-title").scrollIntoView({behavior:"smooth"})}
-function musicSection(){document.getElementById("music").scrollIntoView({behavior:"smooth"})}
-function startTap(){
-mode="tap";score=0;playing=true;
-showGame("🎯 Tap Challenge","Tekan target sebanyak mungkin!","🎯","TAP!");
-updateScore();
+function openTool(id,btn){
+ document.querySelectorAll('.tool').forEach(x=>x.classList.remove('show'));
+ document.getElementById(id).classList.add('show');
+ document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active'));
+ if(btn)btn.classList.add('active');
+ window.scrollTo({top:0,behavior:'smooth'});
 }
-function startGuess(){
-mode="guess";secret=Math.floor(Math.random()*10)+1;tries=3;playing=true;
-showGame("🧠 Tebak Angka","Tebak angka dari 1 sampai 10.","❓","TEBAK!");
-document.getElementById("score").textContent="Kesempatan: 3";
+function openMedia(id){
+ const value=document.getElementById(id).value.trim();
+ if(!value)return alert('Masukkan tautan terlebih dahulu!');
+ try{
+  const u=new URL(value);
+  if(u.protocol!=='https:'&&u.protocol!=='http:')throw Error();
+  window.open(u.href,'_blank','noopener');
+ }catch(e){alert('Tautan tidak valid.');}
 }
-function startSpace(){
-mode="space";playing=true;
-showGame("🌌 Space World","Tekan tombol untuk menjelajahi galaksi!","🚀","Jelajahi!");
+function playAudioUrl(){
+ const value=document.getElementById('audioUrl').value.trim();
+ if(!value)return alert('Masukkan tautan audio!');
+ const box=document.getElementById('audioPlayer');
+ box.innerHTML='';
+ const a=document.createElement('audio');
+ a.controls=true;a.style.width='100%';a.src=value;
+ box.appendChild(a);
+ a.play().catch(()=>alert('Audio tidak dapat diputar dari tautan ini.'));
 }
-function showGame(title,info,target,button){
-document.getElementById("game").style.display="block";
-document.getElementById("game-title").textContent=title;
-document.getElementById("instructions").textContent=info;
-document.getElementById("target").textContent=target;
-document.getElementById("action").textContent=button;
-document.getElementById("result").textContent="";
-document.getElementById("game").scrollIntoView({behavior:"smooth"});
+function playLocal(input,id){
+ const box=document.getElementById(id);
+ box.innerHTML='';
+ if(input.files[0]){
+  const a=document.createElement('audio');
+  a.controls=true;a.style.width='100%';
+  a.src=URL.createObjectURL(input.files[0]);
+  box.appendChild(a);
+ }
 }
-function updateScore(){document.getElementById("score").textContent="Skor: "+score}
-function act(){
-if(!playing)return;
-if(mode==="tap"){
-score++;updateScore();
-document.getElementById("target").textContent=["🎯","⚡","💎","🔥","⭐"][Math.floor(Math.random()*5)];
+function makeQR(){
+ const text=document.getElementById('qrText').value.trim();
+ if(!text)return alert('Masukkan teks atau tautan!');
+ const box=document.getElementById('qrResult');
+ box.textContent='Membuat QR Code...';
+ const img=document.createElement('img');
+ img.alt='QR Code';img.width=220;img.height=220;
+ img.style.maxWidth='100%';
+ img.referrerPolicy='no-referrer';
+ img.src='https://api.qrserver.com/v1/create-qr-code/?size=220x220&data='+encodeURIComponent(text);
+ img.onload=()=>{box.replaceChildren(img);const a=document.createElement('a');a.href=img.src;a.download='mahes-world-qr.png';a.className='btn';a.textContent='Simpan QR';a.style.display='inline-block';a.style.marginTop='12px';box.appendChild(document.createElement('br'));box.appendChild(a)};
+ img.onerror=()=>{box.textContent='QR gagal dibuat. Periksa koneksi internet.'};
 }
-else if(mode==="guess"){
-let answer=prompt("Tebak angka 1–10:");
-if(answer===null)return;
-if(Number(answer)===secret){
-document.getElementById("result").textContent="BENAR! Kamu menang 🏆";
-document.getElementById("target").textContent="🏆";playing=false;
-}else{
-tries--;
-document.getElementById("score").textContent="Kesempatan: "+tries;
-document.getElementById("result").textContent=tries===0?"Kesempatan habis! Angkanya "+secret:(Number(answer)<secret?"Terlalu kecil!":"Terlalu besar!");
-if(tries===0)playing=false;
+let score=0,time=10,playing=false,gameInterval;
+function startGame(){
+ clearInterval(gameInterval);score=0;time=10;playing=true;
+ document.getElementById('score').textContent='Skor: 0';
+ document.getElementById('timer').textContent='Waktu: 10 detik';
+ document.getElementById('gameMsg').textContent='GAS TEKAN TARGET!';
+ document.getElementById('startBtn').disabled=true;
+ gameInterval=setInterval(()=>{
+  time--;
+  document.getElementById('timer').textContent='Waktu: '+time+' detik';
+  if(time<=0){
+   clearInterval(gameInterval);playing=false;
+   document.getElementById('gameMsg').textContent='Selesai! Skor akhir: '+score;
+   document.getElementById('startBtn').disabled=false;
+  }
+ },1000);
 }
+function tapTarget(){
+ if(!playing)return;
+ score++;
+ document.getElementById('score').textContent='Skor: '+score;
+ document.getElementById('target').textContent=['🎯','⭐','💎','🔥'][Math.floor(Math.random()*4)];
 }
-else{
-document.getElementById("target").textContent=["🌟","🪐","☄️","🌙"][Math.floor(Math.random()*4)];
-document.getElementById("result").textContent="Bintang baru ditemukan! ✨";
-}
-}
-function closeGame(){playing=false;document.getElementById("game").style.display="none"}
-
-let yt=null,ytReady=false,volume=60,currentId="";
-let songs=[];
-function onYouTubeIframeAPIReady(){
-yt=new YT.Player("player",{
-width:"100%",height:"100%",videoId:"M7lc1UVf-VE",
-playerVars:{playsinline:1},
-events:{onReady:function(e){ytReady=true;e.target.setVolume(volume);document.getElementById("status").textContent="Pemutar siap! Cari lagu atau tempel link video.";}}
-});
-}
-function getVideoId(url){
-try{
-let u=new URL(url),id="";
-if(u.hostname==="youtu.be")id=u.pathname.slice(1);
-else if(u.hostname.includes("youtube.com"))id=u.searchParams.get("v")||"";
-if(u.pathname.startsWith("/embed/")||u.pathname.startsWith("/shorts/"))id=u.pathname.split("/")[2]||id;
-return /^[a-zA-Z0-9_-]{11}$/.test(id)?id:"";
-}catch(e){return ""}
-}
-function addSong(id){
-if(songs.some(s=>s.id===id)){loadSong(id);return}
-songs.push({id:id,title:"Video YouTube"});
-let box=document.createElement("p"),btn=document.createElement("button");
-btn.textContent="▶ Video "+id;
-btn.onclick=()=>loadSong(id);
-box.appendChild(btn);document.getElementById("playlist").appendChild(box);
-loadSong(id);
-}
-function loadSong(id){
-if(!ytReady){document.getElementById("status").textContent="Pemutar sedang dimuat. Coba lagi sebentar.";return}
-currentId=id;yt.loadVideoById(id);yt.setVolume(volume);
-document.getElementById("status").textContent="Memuat lagu di Mahes World 🎵";
-}
-document.getElementById("add-form").addEventListener("submit",function(e){
-e.preventDefault();let id=getVideoId(document.getElementById("video-url").value.trim());
-if(!id){document.getElementById("status").textContent="Link video tidak valid. Coba link YouTube biasa.";return}
-addSong(id);document.getElementById("video-url").value="";
-});
-document.getElementById("search-form").addEventListener("submit",function(e){
-e.preventDefault();let q=document.getElementById("search").value.trim();
-window.open("https://www.youtube.com/results?search_query="+encodeURIComponent(q),"_blank","noopener");
-document.getElementById("status").textContent="Pilih video di YouTube, salin linknya, lalu tempel di kolom tambah video.";
-});
-function playSong(){if(ytReady)yt.playVideo()}
-function pauseSong(){if(ytReady)yt.pauseVideo()}
-function changeVolume(n){volume=Math.max(0,Math.min(100,volume+n));if(ytReady)yt.setVolume(volume);document.getElementById("status").textContent="Volume: "+volume+"%"}
-let api=document.createElement("script");
-api.src="https://www.youtube.com/iframe_api";
-document.head.appendChild(api);
 </script>
 </body>
 </html>
-
