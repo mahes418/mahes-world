@@ -3,263 +3,157 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Mahes World | Nagi Edition</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mahes World</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#080808;color:#fff;font-family:Arial,sans-serif}
-header{text-align:center;padding:25px 12px;border-bottom:1px solid #333}
-header h1{letter-spacing:4px;margin:0}
-header p{color:#999}
-nav{display:flex;justify-content:center;gap:7px;flex-wrap:wrap;padding:14px}
-button{background:#eee;color:#111;border:1px solid #fff;border-radius:8px;padding:11px 13px;font-weight:bold;cursor:pointer}
-nav button{background:#171717;color:white;border-color:#444}
-nav button.active{background:white;color:black}
-main{max-width:850px;margin:auto;padding:14px}
-section.page{display:none}
-section.page.active{display:block}
-.card{background:#111;border:1px solid #333;border-radius:15px;padding:18px;margin-bottom:15px}
-.hero{min-height:270px;display:flex;align-items:end;background:linear-gradient(0deg,#000,#0005),linear-gradient(130deg,#555,#111 60%,#000);border:1px solid #444;border-radius:15px}
-.hero-content{padding:23px}
-.hero h2{font-size:34px;margin:12px 0}
-.tag{font-size:11px;letter-spacing:3px;border:1px solid #aaa;padding:7px;border-radius:20px}
-.muted{color:#aaa;font-size:14px;line-height:1.6}
-iframe{width:100%;height:320px;border:0;border-radius:10px}
-input{width:100%;padding:12px;background:#080808;color:white;border:1px solid #555;border-radius:8px;margin:8px 0}
-audio{width:100%;margin-top:12px}
-.pitch{height:240px;background:repeating-linear-gradient(90deg,#171717,#171717 40px,#222 40px,#222 80px);border:2px solid #777;border-radius:12px;position:relative;text-align:center;overflow:hidden}
-.goal{width:70%;height:85px;margin:20px auto 0;border:3px solid white;border-bottom:0}
-.keeper{font-size:35px;position:absolute;left:45%;top:20px;transition:left .2s}
-.ball{font-size:32px;position:absolute;bottom:20px;left:calc(50% - 16px);transition:all .3s}
-.pitch.shoot-left .ball{left:20%;bottom:125px}
-.pitch.shoot-mid .ball{left:calc(50% - 16px);bottom:125px}
-.pitch.shoot-right .ball{left:75%;bottom:125px}
-.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
-.tile{font-size:26px;min-height:62px;background:#222;color:white;border:1px solid #444}
-.tile:disabled{opacity:1}
-.contact-btn{display:flex;align-items:center;gap:14px;padding:15px;margin:10px 0;background:#181818;border:1px solid #383838;border-radius:12px;color:white;text-decoration:none;transition:.2s}
-.contact-btn:hover{background:#292929;border-color:white}
-.symbol{width:36px;height:36px;background:#292929;border-radius:9px;display:grid;place-items:center;font-size:22px}
-.info{flex:1;display:flex;flex-direction:column;gap:5px}
-.info small{color:#999}
-.arrow{color:#aaa}
-footer{text-align:center;color:#777;padding:25px;font-size:12px}
-@media(max-width:480px){.hero h2{font-size:28px}iframe{height:260px}}
+body{margin:0;background:#080808;color:white;font-family:Arial,sans-serif}
+header{text-align:center;padding:25px 12px;background:#111;border-bottom:1px solid #444}
+header h1{letter-spacing:4px;margin:5px}
+nav{display:flex;justify-content:center;flex-wrap:wrap;gap:8px;padding:15px}
+button,.link{background:#fff;color:#000;border:0;border-radius:9px;padding:11px 15px;font-weight:bold;cursor:pointer;text-decoration:none}
+button:hover,.link:hover{background:#bbb}
+main{max-width:850px;margin:auto;padding:15px}
+section{background:#151515;border:1px solid #333;border-radius:16px;padding:18px;margin-bottom:18px}
+h2{border-bottom:1px solid #444;padding-bottom:10px}
+.hero{text-align:center}
+.hero img{width:100%;max-width:440px;max-height:480px;object-fit:cover;border-radius:14px;border:1px solid #555}
+.small{color:#bbb;font-size:14px}
+.page{display:none}.page.active{display:block}
+input{max-width:100%;margin:10px 0}
+#result{font-size:22px;font-weight:bold}
+footer{text-align:center;color:#888;padding:25px}
 </style>
 </head>
 <body>
 <header>
-<h1>MAHES WORLD</h1>
-<p>ANIME • MUSIC • GAMES</p>
+  <h1>MAHES WORLD</h1>
+  <p>GAME • MUSIC • FOOTBALL</p>
 </header>
 
 <nav>
-<button class="active" onclick="showPage('home',this)">HOME</button>
-<button onclick="showPage('music',this)">MUSIC 🎧</button>
-<button onclick="showPage('football',this)">FOOTBALL ⚽</button>
-<button onclick="showPage('puzzle',this)">PUZZLE 🧩</button>
-<button onclick="showPage('contact',this)">CONTACT ☎</button>
+  <button onclick="showPage('home')">Home</button>
+  <button onclick="showPage('music')">Music</button>
+  <button onclick="showPage('football')">Football</button>
+  <button onclick="showPage('puzzle')">Puzzle</button>
+  <button onclick="showPage('contact')">Contact</button>
 </nav>
 
 <main>
-<section id="home" class="page active">
-<div class="hero">
-<div class="hero-content">
-<span class="tag">BLUE LOCK EDITION</span>
-<h2>NAGI SEISHIRO</h2>
-<p class="muted">Anime • Music • Games • Forever</p>
-<button onclick="showPage('football',document.querySelectorAll('nav button')[2])">PLAY NOW →</button>
-</div>
-</div>
-
-<div class="card" style="margin-top:15px">
-<h2>WELCOME TO MY WORLD</h2>
-<p class="muted">Website pribadi Mahes. Dengarkan musik, main game, dan nikmati tema monochrome.</p>
-</div>
-
-<div class="card">
-<h2>🎬 Nagi Video</h2>
-<p class="muted">Tambahkan video legal milikmu dengan nama nagi.mp4 ke repository agar tampil di sini.</p>
-<video controls playsinline preload="metadata" style="width:100%;max-height:350px;background:#000;border-radius:10px">
-<source src="nagi.mp4" type="video/mp4">
-Browser tidak mendukung video.
-</video>
-</div>
+<div id="home" class="page active">
+<section class="hero">
+  <h2>NAGI SEISHIRO</h2>
+  <img src="https://static.wikia.nocookie.net/bluelock/images/8/8b/Seishiro_Nagi_%28Anime%29.png"
+       alt="Foto Nagi Seishiro"
+       onerror="this.alt='Foto Nagi belum berhasil dimuat';this.style.minHeight='180px'">
+  <h3>THE LAZY GENIUS ⚽</h3>
+  <p>Selamat datang di Mahes World!</p>
+  <p class="small">Tempat main game, dengerin musik, dan santai.</p>
 </section>
+</div>
 
-<section id="music" class="page">
-<div class="card">
-<h2>🎧 Spotify Player</h2>
-<p class="muted">Musik melalui pemutar Spotify, tanpa YouTube. Login atau akun tertentu mungkin diperlukan.</p>
-<iframe title="Spotify Player" src="https://open.spotify.com/embed/playlist/37i9dQZF1DXcBWIGoYBM5M" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-</div>
-<div class="card">
-<h2>🎵 MP3 DARI HP</h2>
-<p class="muted">Pilih satu atau beberapa file audio yang tersimpan di perangkatmu.</p>
-<input id="audioFiles" type="file" accept="audio/*" multiple>
-<div id="songList"></div>
-<audio id="audioPlayer" controls></audio>
-<p id="songName" class="muted">Belum ada lagu dipilih.</p>
-</div>
+<div id="music" class="page">
+<section>
+  <h2>🎵 MUSIC PLAYER</h2>
+  <p>Pilih lagu MP3 dari HP kamu:</p>
+  <input type="file" id="song" accept="audio/*">
+  <audio id="player" controls style="width:100%"></audio>
+  <p class="small">Pilih file lagu sendiri untuk memutarnya.</p>
 </section>
+</div>
 
-<section id="football" class="page">
-<div class="card">
-<h2>⚽ NAGI PENALTY CHALLENGE</h2>
-<p class="muted">Pilih arah tendangan. Kiper memilih arah secara acak. Lima tendangan untuk meraih skor tertinggi!</p>
-<div class="pitch" id="pitch">
-<div class="goal"></div>
-<div class="keeper" id="keeper">🧤</div>
-<div class="ball" id="ball">⚽</div>
-</div>
-<p id="footballScore">Gol: 0 | Tendangan: 0/5</p>
-<div style="display:flex;gap:7px;justify-content:center;flex-wrap:wrap">
-<button onclick="shoot('left')">KIRI ↖</button>
-<button onclick="shoot('mid')">TENGAH ↑</button>
-<button onclick="shoot('right')">KANAN ↗</button>
-<button onclick="resetFootball()" style="background:#222;color:white">ULANG</button>
-</div>
-<p id="footballMessage" class="muted">Ambil tendangan pertamamu!</p>
-</div>
+<div id="football" class="page">
+<section>
+  <h2>⚽ PENALTY SHOOT</h2>
+  <p>Pilih arah tendanganmu!</p>
+  <button onclick="kick('Kiri')">⬅ Kiri</button>
+  <button onclick="kick('Tengah')">⬆ Tengah</button>
+  <button onclick="kick('Kanan')">➡ Kanan</button>
+  <p id="result">Siap menendang?</p>
+  <p>Gol: <span id="goals">0</span> | Gagal: <span id="misses">0</span></p>
+  <button onclick="resetGame()">Ulangi</button>
 </section>
-
-<section id="puzzle" class="page">
-<div class="card">
-<h2>🧩 MONOCHROME MEMORY</h2>
-<p class="muted">Buka dua kartu. Temukan semua pasangan simbol dengan percobaan sesedikit mungkin.</p>
-<p id="puzzleStatus">Pasangan: 0/6 | Percobaan: 0</p>
-<div class="tiles" id="tiles"></div>
-<button onclick="newPuzzle()" style="margin-top:15px">MAIN LAGI ↻</button>
 </div>
+
+<div id="puzzle" class="page">
+<section>
+  <h2>🧠 MEMORY PUZZLE</h2>
+  <p>Ingat urutan angka ini:</p>
+  <h2 id="sequence">Tekan Mulai!</h2>
+  <button onclick="startPuzzle()">Mulai</button>
+  <p id="puzzleInfo"></p>
+  <input id="answer" placeholder="Ketik urutan angka">
+  <button onclick="checkPuzzle()">Cek Jawaban</button>
 </section>
-
-<section id="contact" class="page">
-<div class="card">
-<p class="muted" style="letter-spacing:4px">LET'S CONNECT</p>
-<h2>CONTACT MAHES.</h2>
-<p class="muted">Connect with me through my social media.</p>
-
-<a class="contact-btn" href="https://wa.me/6285664683144" target="_blank" rel="noopener noreferrer">
-<span class="symbol">◉</span>
-<span class="info"><strong>WhatsApp</strong><small>Chat with me</small></span>
-<span class="arrow">↗</span>
-</a>
-
-<a class="contact-btn" href="https://t.me/hesaaaa4" target="_blank" rel="noopener noreferrer">
-<span class="symbol">➤</span>
-<span class="info"><strong>Telegram</strong><small>@hesaaaa4</small></span>
-<span class="arrow">↗</span>
-</a>
-
-<a class="contact-btn" href="https://www.tiktok.com/@someone26831" target="_blank" rel="noopener noreferrer">
-<span class="symbol">♪</span>
-<span class="info"><strong>TikTok</strong><small>@someone26831</small></span>
-<span class="arrow">↗</span>
-</a>
-<p class="muted" style="text-align:center;margin-top:25px">MAHES WORLD © 2026 · BLACK & WHITE</p>
 </div>
+
+<div id="contact" class="page">
+<section>
+  <h2>📱 CONTACT ME</h2>
+  <p>WhatsApp</p>
+  <a class="link" href="https://wa.me/6285664683144" target="_blank">Chat WhatsApp</a>
+  <p>Telegram</p>
+  <a class="link" href="https://t.me/hesaaaa4" target="_blank">@hesaaaa4</a>
+  <p>TikTok</p>
+  <a class="link" href="https://www.tiktok.com/@someone26831" target="_blank">@someone26831</a>
 </section>
+</div>
 </main>
 
-<footer>MAHES WORLD © 2026 · MADE BY MAHES</footer>
+<footer>© 2026 Mahes World • Keep Playing ⚡</footer>
 
 <script>
-function showPage(id,btn){
- document.querySelectorAll('.page').forEach(s=>s.classList.remove('active'));
+function showPage(id){
+ document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
  document.getElementById(id).classList.add('active');
- document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
- btn.classList.add('active');
- window.scrollTo({top:0,behavior:'smooth'});
+ window.scrollTo(0,0);
 }
 
-const fileInput=document.getElementById('audioFiles');
-const songList=document.getElementById('songList');
-const audioPlayer=document.getElementById('audioPlayer');
-let songs=[];
-fileInput.onchange=()=>{
- songs.forEach(s=>URL.revokeObjectURL(s.url));
- songs=Array.from(fileInput.files).map(f=>({name:f.name,url:URL.createObjectURL(f)}));
- songList.replaceChildren();
- songs.forEach((s,i)=>{
-  const b=document.createElement('button');
-  b.textContent='▶ '+s.name;
-  b.style.cssText='display:block;width:100%;margin:6px 0;text-align:left;overflow-wrap:anywhere';
-  b.onclick=()=>{
-   audioPlayer.src=s.url;
-   document.getElementById('songName').textContent='Lagu: '+s.name;
-   audioPlayer.play().catch(()=>{});
-  };
-  songList.appendChild(b);
- });
-};
+document.getElementById('song').addEventListener('change',function(){
+ if(this.files.length){
+  const player=document.getElementById('player');
+  player.src=URL.createObjectURL(this.files[0]);
+  player.play();
+ }
+});
 
-let goals=0,kicks=0,finished=false;
-function updateFootball(){
- document.getElementById('footballScore').textContent=`Gol: ${goals} | Tendangan: ${kicks}/5`;
-}
-function shoot(direction){
- if(finished)return;
- const keeperDirection=['left','mid','right'][Math.floor(Math.random()*3)];
- document.getElementById('pitch').className='pitch shoot-'+direction;
- document.getElementById('keeper').style.left=
- keeperDirection==='left'?'18%':keeperDirection==='right'?'75%':'45%';
- kicks++;
- if(direction!==keeperDirection){
+let goals=0,misses=0;
+function kick(direction){
+ const keeper=['Kiri','Tengah','Kanan'][Math.floor(Math.random()*3)];
+ if(direction!==keeper){
   goals++;
-  document.getElementById('footballMessage').textContent='GOOOL! Tendangan masuk! ⚽';
+  document.getElementById('result').textContent='GOOOL! 🔥 Kiper ke '+keeper;
  }else{
-  document.getElementById('footballMessage').textContent='DITANGKAP KIPER! Coba lagi.';
+  misses++;
+  document.getElementById('result').textContent='DITANGKAP! 😭 Kiper ke '+keeper;
  }
- updateFootball();
- if(kicks===5){
-  finished=true;
-  document.getElementById('footballMessage').textContent+=` Selesai! Skor akhir ${goals}/5. Tekan ULANG untuk bermain lagi.`;
- }
+ document.getElementById('goals').textContent=goals;
+ document.getElementById('misses').textContent=misses;
 }
-function resetFootball(){
- goals=0;kicks=0;finished=false;
- document.getElementById('pitch').className='pitch';
- document.getElementById('keeper').style.left='45%';
- document.getElementById('footballMessage').textContent='Game baru dimulai!';
- updateFootball();
+function resetGame(){
+ goals=0;misses=0;
+ document.getElementById('goals').textContent=0;
+ document.getElementById('misses').textContent=0;
+ document.getElementById('result').textContent='Siap menendang?';
 }
 
-const symbols=['⚽','★','♠','♫','◆','☾'];
-let deck=[],chosen=[],matched=[],attempts=0,locked=false;
-function newPuzzle(){
- deck=[...symbols,...symbols].sort(()=>Math.random()-.5);
- chosen=[];matched=[];attempts=0;locked=false;
- drawPuzzle();
+let secret='';
+function startPuzzle(){
+ secret=Array.from({length:4},()=>Math.floor(Math.random()*10)).join('');
+ document.getElementById('sequence').textContent=secret;
+ document.getElementById('puzzleInfo').textContent='Hafalkan angkanya!';
+ document.getElementById('answer').value='';
+ setTimeout(()=>{
+  document.getElementById('sequence').textContent='????';
+  document.getElementById('puzzleInfo').textContent='Sekarang masukkan urutannya!';
+ },2500);
 }
-function drawPuzzle(){
- const grid=document.getElementById('tiles');
- grid.replaceChildren();
- deck.forEach((symbol,i)=>{
-  const b=document.createElement('button');
-  b.className='tile';
-  b.textContent=matched.includes(i)||chosen.includes(i)?symbol:'?';
-  b.disabled=matched.includes(i)||chosen.includes(i)||locked;
-  b.onclick=()=>flipTile(i);
-  grid.appendChild(b);
- });
- document.getElementById('puzzleStatus').textContent=
- `Pasangan: ${matched.length/2}/6 | Percobaan: ${attempts}`;
+function checkPuzzle(){
+ if(!secret){document.getElementById('puzzleInfo').textContent='Tekan Mulai dulu!';return}
+ const answer=document.getElementById('answer').value.trim();
+ document.getElementById('puzzleInfo').textContent=
+ answer===secret?'BENAR! Kamu jago! 🎉':'Belum tepat, coba mulai lagi!';
 }
-function flipTile(i){
- if(locked||chosen.includes(i)||matched.includes(i))return;
- chosen.push(i);
- if(chosen.length<2){drawPuzzle();return}
- attempts++;
- if(deck[chosen[0]]===deck[chosen[1]]){
-  matched.push(...chosen);chosen=[];drawPuzzle();
-  if(matched.length===deck.length)
-   document.getElementById('puzzleStatus').textContent=`MENANG! Semua pasangan ditemukan dalam ${attempts} percobaan!`;
- }else{
-  locked=true;drawPuzzle();
-  setTimeout(()=>{chosen=[];locked=false;drawPuzzle()},750);
- }
-}
-newPuzzle();
 </script>
 </body>
 </html>
