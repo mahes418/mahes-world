@@ -1,484 +1,201 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Mahes World 🎮</title>
+<title>Mahes World - Game Center</title>
 <style>
 *{box-sizing:border-box}
-body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  color:white;
-  background:linear-gradient(135deg,#090b20,#151047,#25105a);
-  min-height:100vh;
-}
-header{text-align:center;padding:35px 15px 20px}
-h1{
-  font-size:38px;margin:0;
-  background:linear-gradient(90deg,#00eeff,#d88bff,#ff65bd);
-  color:transparent;background-clip:text;
-}
-header p{color:#c8c5ff}
-nav{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
-button{
-  border:1px solid #7770ff;
-  border-radius:12px;padding:12px 17px;
-  color:white;background:#28205b;
-  cursor:pointer;font-weight:bold;
-}
+body{margin:0;font-family:Arial,sans-serif;color:white;background:linear-gradient(135deg,#080b20,#171044,#30105a);min-height:100vh}
+header{text-align:center;padding:30px 15px}
+h1{font-size:36px;background:linear-gradient(90deg,#00eeff,#d88bff,#ff65bd);color:transparent;background-clip:text;margin:0}
+header p{color:#ccc5ff}
+nav{display:flex;justify-content:center;gap:8px;flex-wrap:wrap}
+button{border:1px solid #8170ff;border-radius:11px;padding:11px 15px;color:white;background:#332366;cursor:pointer;font-weight:bold;margin:4px}
 button:active{transform:scale(.96)}
-main{max-width:900px;margin:auto;padding:20px}
-.hero{
-  padding:25px;border:1px solid #5148a0;
-  border-radius:20px;background:#ffffff0c;
-  text-align:center;margin-bottom:25px;
-}
-.hero h2{font-size:27px}
-.cards{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));
-  gap:14px;
-}
-.card{
-  padding:20px 12px;text-align:center;
-  background:#ffffff0d;border:1px solid #49417d;
-  border-radius:18px;transition:.2s;
-}
-.card:hover{transform:translateY(-5px);background:#342766}
+main{max-width:900px;margin:auto;padding:16px}
+.hero,.card,#game,#music{background:#ffffff0c;border:1px solid #5148a0;border-radius:18px;padding:20px;margin-bottom:18px}
+.hero{text-align:center}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}
+.card{text-align:center;margin:0}
 .emoji{font-size:42px}
-.card h3{margin:12px 0 8px}
-.card p{color:#c8c5df;font-size:13px}
-#game{
-  display:none;text-align:center;margin-top:22px;
-  padding:22px;border-radius:18px;background:#11102d;
-}
-#score{font-size:24px;color:#5fffe0}
-#target{font-size:55px;padding:10px}
-footer{text-align:center;padding:25px;color:#a9a5cf}
+.card p{color:#ccc5df;font-size:13px}
+#game{display:none;text-align:center;margin-top:20px}
+#score{font-size:23px;color:#5fffe0}
+#target{font-size:48px;padding:10px}
+#music input{width:100%;padding:12px;border-radius:10px;border:1px solid #8170ff;background:#17152e;color:white;margin:6px 0}
+#player{width:100%;aspect-ratio:16/9;background:#090816;margin:14px 0;border-radius:12px;overflow:hidden}
+#player iframe{width:100%;height:100%;border:0}
+#playlist button{max-width:100%;overflow-wrap:anywhere}
+#status{color:#c9c0eb;font-size:14px}
+footer{text-align:center;padding:25px;color:#aaa5cf;font-size:13px}
 </style>
 </head>
 <body>
 <header>
-  <h1>MAHES WORLD</h1>
-  <p>🚀 Your World. Your Game. Your Adventure.</p>
-  <nav>
-    <button onclick="home()">🏠 Home</button>
-    <button onclick="showGames()">🎮 Games</button>
-    <button onclick="music()">🎵 Musik</button>
-  </nav>
+<h1>MAHES WORLD</h1>
+<p>🚀 Your World. Your Game. Your Adventure.</p>
+<nav>
+<button onclick="home()">🏠 Home</button>
+<button onclick="games()">🎮 Games</button>
+<button onclick="musicSection()">🎵 Musik</button>
+</nav>
 </header>
 
 <main>
-  <section class="hero">
-    <h2>WELCOME TO MY WORLD ✨</h2>
-    <p>Tempat bermain, bersantai, dan menaklukkan tantangan!</p>
-    <button onclick="showGames()">MULAI BERMAIN 🚀</button>
-  </section>
-
-  <h2>🎮 Pilih Game Kamu</h2>
-  <section class="cards">
-    <div class="card">
-      <div class="emoji">🎯</div>
-      <h3>Tap Challenge</h3>
-      <p>Seberapa cepat kamu mengetuk?</p>
-      <button onclick="startGame()">Mainkan</button>
-    </div>
-    <div class="card">
-      <div class="emoji">🧠</div>
-      <h3>Tebak Angka</h3>
-      <p>Temukan angka rahasia!</p>
-      <button onclick="guessGame()">Mainkan</button>
-    </div>
-    <div class="card">
-      <div class="emoji">🌌</div>
-      <h3>Space World</h3>
-      <p>Jelajahi dunia luar angkasa.</p>
-      <button onclick="spaceGame()">Jelajahi</button>
-    </div>
-  </section>
-
-  <section id="game">
-    <h2 id="gameTitle">🎯 Tap Challenge</h2>
-    <p id="instructions">Tekan target sebanyak mungkin!</p>
-    <div id="score">Skor: 0</div>
-    <div id="target">🎯</div>
-    <button id="action" onclick="tap()">TAP!</button>
-    <p id="result"></p>
-    <button onclick="closeGame()">Tutup Game</button>
-  </section>
-
-  <section style="text-align:center;margin-top:25px">
-    <h2>🎵 Music Corner</h2>
-    <p id="musicStatus">Musik santai dengan nada buatan browser.</p>
-    <button onclick="music()">▶ Putar / Hentikan Musik</button>
-  </section>
-</main>
-
-<section id="mahes-music">
-  <h2>🎧 Mahes Music</h2>
-  <p>Music mode: ON 🎮</p>
-
-  <form id="music-search">
-    <input
-      id="music-query"
-      type="search"
-      placeholder="Cari lagu di YouTube..."
-      aria-label="Cari lagu"
-      required
-    >
-    <button type="submit">🔎 Cari</button>
-  </form>
-
-  <div id="yt-player"></div>
-
-  <div class="music-controls">
-    <button id="music-play">▶ Putar</button>
-    <button id="music-pause">⏸ Jeda</button>
-    <label>
-      Volume
-      <input id="music-volume" type="range"
-        min="0" max="100" value="60">
-    </label>
-  </div>
-
-  <h3>📃 Playlist-ku</h3>
-  <p id="music-status">Cari lagu atau tambahkan video dari YouTube.</p>
-  <div id="music-results"></div>
-  <ol id="music-playlist"></ol>
-
-  <button id="music-clear">Kosongkan playlist</button>
-  <p class="music-note">
-    Pemutaran menggunakan YouTube. Ketersediaan video
-    bergantung pada pengaturan pemiliknya.
-  </p>
+<section class="hero" id="home">
+<h2>WELCOME TO MY WORLD ✨</h2>
+<p>Tempat bermain, bersantai, dan menaklukkan tantangan!</p>
+<button onclick="games()">MULAI BERMAIN 🚀</button>
 </section>
 
-<style>
-#mahes-music {
-  margin: 28px 0;
-  padding: 20px;
-  color: white;
-  background: linear-gradient(145deg,#11102d,#25104a);
-  border: 1px solid #7160ff;
-  border-radius: 20px;
-  font-family: Arial,sans-serif;
-}
-#mahes-music input[type="search"] {
-  width: 100%;
-  min-width: 0;
-  padding: 12px;
-  border-radius: 10px;
-  border: 1px solid #8273ff;
-  background: #17152e;
-  color: white;
-  margin-bottom: 10px;
-}
-#mahes-music button {
-  margin: 4px;
-  padding: 10px 14px;
-  border-radius: 10px;
-  color: white;
-  background: #4c32a8;
-  border: 1px solid #9b86ff;
-}
-#yt-player {
-  width: 100%;
-  aspect-ratio: 16/9;
-  margin: 14px 0;
-  background: #090816;
-  border-radius: 12px;
-  overflow: hidden;
-}
-#yt-player iframe {
-  width: 100%;
-  height: 100%;
-  border: 0;
-}
-.music-controls {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-  flex-wrap: wrap;
-}
-.music-controls label {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-#music-playlist li,
-#music-results li {
-  margin: 10px 0;
-  padding: 10px;
-  background: #ffffff10;
-  border-radius: 10px;
-  overflow-wrap: anywhere;
-}
-#mahes-music .music-note {
-  color: #c9c0eb;
-  font-size: 12px;
-}
-</style>
+<h2 id="games-title">🎮 Pilih Game Kamu</h2>
+<section class="cards">
+<div class="card"><div class="emoji">🎯</div><h3>Tap Challenge</h3><p>Uji kecepatan jarimu!</p><button onclick="startTap()">Mainkan</button></div>
+<div class="card"><div class="emoji">🧠</div><h3>Tebak Angka</h3><p>Tebak angka rahasia 1–10.</p><button onclick="startGuess()">Mainkan</button></div>
+<div class="card"><div class="emoji">🌌</div><h3>Space World</h3><p>Jelajahi galaksi!</p><button onclick="startSpace()">Jelajahi</button></div>
+</section>
+
+<section id="game">
+<h2 id="game-title">🎮 Game</h2>
+<p id="instructions"></p>
+<div id="score">Skor: 0</div>
+<div id="target">🎯</div>
+<button id="action" onclick="act()">Mulai!</button>
+<p id="result"></p>
+<button onclick="closeGame()">Tutup Game</button>
+</section>
+
+<section id="music">
+<h2>🎧 Mahes Music</h2>
+<p>Putar lagu YouTube tanpa meninggalkan website!</p>
+<form id="search-form">
+<input id="search" type="search" placeholder="Cari nama lagu..." required>
+<button type="submit">🔎 Cari di YouTube</button>
+</form>
+<p id="status">Tempel link video YouTube untuk mulai.</p>
+<div id="player"></div>
+<form id="add-form">
+<input id="video-url" type="url" placeholder="Tempel link video YouTube di sini" required>
+<button type="submit">➕ Tambah & Putar</button>
+</form>
+<div>
+<button onclick="playSong()">▶ Putar</button>
+<button onclick="pauseSong()">⏸ Jeda</button>
+<button onclick="changeVolume(-10)">🔉 Volume −</button>
+<button onclick="changeVolume(10)">🔊 Volume +</button>
+</div>
+<h3>📃 Playlist</h3>
+<div id="playlist"></div>
+</section>
+</main>
+
+<footer>MAHES WORLD // GAME CENTER © 2026</footer>
 
 <script>
-(function () {
-  const $ = id => document.getElementById(id);
-  const playlist = [];
-  let player = null;
-  let ready = false;
-  let current = -1;
-
-  function status(message) {
-    $("music-status").textContent = message;
-  }
-
-  function loadVideo(id) {
-    if (!ready || !player) {
-      status("Pemutar masih dimuat. Coba sebentar lagi.");
-      return;
-    }
-    current = playlist.findIndex(item => item.id === id);
-    player.loadVideoById(id);
-    status("Memuat video YouTube...");
-    renderPlaylist();
-  }
-
-  function renderPlaylist() {
-    const list = $("music-playlist");
-    list.replaceChildren();
-
-    playlist.forEach((item, index) => {
-      const li = document.createElement("li");
-      const btn = document.createElement("button");
-      btn.textContent =
-        (index === current ? "▶ " : "") + item.title;
-      btn.addEventListener("click", () => loadVideo(item.id));
-      li.appendChild(btn);
-      list.appendChild(li);
-    });
-  }
-
-  function addVideo(id, title) {
-    if (playlist.some(item => item.id === id)) {
-      status("Lagu itu sudah ada di playlist.");
-      return;
-    }
-    playlist.push({ id, title });
-    renderPlaylist();
-    status("Ditambahkan ke playlist: " + title);
-  }
-
-  $("music-search").addEventListener("submit", event => {
-    event.preventDefault();
-    const query = $("music-query").value.trim();
-    if (!query) return;
-
-    const url =
-      "https://www.youtube.com/results?search_query=" +
-      encodeURIComponent(query);
-
-    window.open(url, "_blank", "noopener");
-    status("Pilih video di YouTube, lalu tambahkan ID videonya.");
-  });
-
-  $("music-play").addEventListener("click", () => {
-    if (ready && player) player.playVideo();
-    else status("Tunggu sampai pemutar siap.");
-  });
-
-  $("music-pause").addEventListener("click", () => {
-    if (ready && player) player.pauseVideo();
-  });
-
-  $("music-volume").addEventListener("input", event => {
-    if (ready && player) {
-      player.setVolume(Number(event.target.value));
-    }
-  });
-
-  $("music-clear").addEventListener("click", () => {
-    playlist.length = 0;
-    current = -1;
-    renderPlaylist();
-    status("Playlist dikosongkan.");
-  });
-
-  // Pilih video YouTube untuk memasukkannya ke playlist.
-  const add = document.createElement("form");
-  add.innerHTML =
-    '<h3>➕ Tambah video</h3>' +
-    '<input id="music-video-url" type="url" ' +
-    'placeholder="Tempel URL video YouTube" required>' +
-    '<button type="submit">Tambah ke playlist</button>';
-  $("music-results").appendChild(add);
-
-  add.addEventListener("submit", event => {
-    event.preventDefault();
-    const url = $("music-video-url").value.trim();
-    let parsed;
-    try { parsed = new URL(url); }
-    catch {
-      status("URL tidak valid.");
-      return;
-    }
-
-    let id = "";
-    if (parsed.hostname === "youtu.be") {
-      id = parsed.pathname.slice(1);
-    } else if (
-      parsed.hostname === "youtube.com" ||
-      parsed.hostname.endsWith(".youtube.com")
-    ) {
-      id = parsed.searchParams.get("v") || "";
-      if (parsed.pathname.startsWith("/embed/")) {
-        id = parsed.pathname.split("/")[2] || "";
-      }
-      if (parsed.pathname.startsWith("/shorts/")) {
-        id = parsed.pathname.split("/")[2] || "";
-      }
-    }
-
-    if (!/^[\w-]{11}$/.test(id)) {
-      status("URL video tidak dikenali. Tempel URL video biasa.");
-      return;
-    }
-
-    addVideo(id, "Video " + id);
-    if (ready && current === -1) loadVideo(id);
-    $("music-video-url").value = "";
-  });
-
-  window.onYouTubeIframeAPIReady = function () {
-    player = new YT.Player("yt-player", {
-      width: "100%",
-      height: "100%",
-      videoId: "",
-      playerVars: { playsinline: 1 },
-      events: {
-        onReady: function (event) {
-          ready = true;
-          event.target.setVolume(60);
-          status("Siap! Tambahkan video YouTube ke playlist.");
-        },
-        onError: function () {
-          status("Video tidak dapat diputar. Coba video lain.");
-        }
-      }
-    });
-  };
-
-  const api = document.createElement("script");
-  api.src = "https://www.youtube.com/iframe_api";
-  api.async = true;
-  document.head.appendChild(api);
-})();
-</script>
-  
-<footer>Made with by Mahes | © 2026 Mahes World</footer>
-
-<script>
-let score=0,secret=0,mode="tap",playing=false;
-let audio=null,osc=null,gain=null;
-
-function home(){
-  document.getElementById("game").style.display="none";
-  window.scrollTo({top:0,behavior:"smooth"});
+let mode="tap",score=0,secret=0,tries=3,playing=false;
+function home(){document.getElementById("home").scrollIntoView({behavior:"smooth"})}
+function games(){document.getElementById("games-title").scrollIntoView({behavior:"smooth"})}
+function musicSection(){document.getElementById("music").scrollIntoView({behavior:"smooth"})}
+function startTap(){
+mode="tap";score=0;playing=true;
+showGame("🎯 Tap Challenge","Tekan target sebanyak mungkin!","🎯","TAP!");
+updateScore();
 }
-function showGames(){
-  document.querySelector(".cards").scrollIntoView({behavior:"smooth"});
+function startGuess(){
+mode="guess";secret=Math.floor(Math.random()*10)+1;tries=3;playing=true;
+showGame("🧠 Tebak Angka","Tebak angka dari 1 sampai 10.","❓","TEBAK!");
+document.getElementById("score").textContent="Kesempatan: 3";
 }
-function startGame(){
-  mode="tap";score=0;playing=true;
-  document.getElementById("game").style.display="block";
-  document.getElementById("gameTitle").textContent="🎯 Tap Challenge";
-  document.getElementById("instructions").textContent="Kumpulkan skor sebanyak mungkin!";
-  document.getElementById("target").textContent="🎯";
-  document.getElementById("action").textContent="TAP!";
-  document.getElementById("result").textContent="";
-  updateScore();
-  document.getElementById("game").scrollIntoView({behavior:"smooth"});
+function startSpace(){
+mode="space";playing=true;
+showGame("🌌 Space World","Tekan tombol untuk menjelajahi galaksi!","🚀","Jelajahi!");
 }
-function tap(){
-  if(!playing||mode!=="tap")return;
-  score++;
-  updateScore();
-  document.getElementById("target").textContent=
-    ["🎯","⚡","💎","🔥","⭐"][Math.floor(Math.random()*5)];
+function showGame(title,info,target,button){
+document.getElementById("game").style.display="block";
+document.getElementById("game-title").textContent=title;
+document.getElementById("instructions").textContent=info;
+document.getElementById("target").textContent=target;
+document.getElementById("action").textContent=button;
+document.getElementById("result").textContent="";
+document.getElementById("game").scrollIntoView({behavior:"smooth"});
 }
-function updateScore(){
-  document.getElementById("score").textContent="Skor: "+score;
+function updateScore(){document.getElementById("score").textContent="Skor: "+score}
+function act(){
+if(!playing)return;
+if(mode==="tap"){
+score++;updateScore();
+document.getElementById("target").textContent=["🎯","⚡","💎","🔥","⭐"][Math.floor(Math.random()*5)];
 }
-function guessGame(){
-  mode="guess";playing=true;score=0;
-  secret=Math.floor(Math.random()*10)+1;
-  document.getElementById("game").style.display="block";
-  document.getElementById("gameTitle").textContent="🧠 Tebak Angka";
-  document.getElementById("instructions").textContent="Tebak angka dari 1 sampai 10.";
-  document.getElementById("target").textContent="❓";
-  document.getElementById("action").textContent="Tebak!";
-  document.getElementById("result").textContent="";
-  document.getElementById("score").textContent="Kesempatan: 3";
-  score=3;
-  document.getElementById("game").scrollIntoView({behavior:"smooth"});
+else if(mode==="guess"){
+let answer=prompt("Tebak angka 1–10:");
+if(answer===null)return;
+if(Number(answer)===secret){
+document.getElementById("result").textContent="BENAR! Kamu menang 🏆";
+document.getElementById("target").textContent="🏆";playing=false;
+}else{
+tries--;
+document.getElementById("score").textContent="Kesempatan: "+tries;
+document.getElementById("result").textContent=tries===0?"Kesempatan habis! Angkanya "+secret:(Number(answer)<secret?"Terlalu kecil!":"Terlalu besar!");
+if(tries===0)playing=false;
 }
-function spaceGame(){
-  mode="space";playing=false;
-  document.getElementById("game").style.display="block";
-  document.getElementById("gameTitle").textContent="🌌 Space World";
-  document.getElementById("instructions").textContent="Kamu adalah penjelajah galaksi!";
-  document.getElementById("target").textContent="🚀";
-  document.getElementById("score").textContent="Misi: Jelajahi bintang";
-  document.getElementById("action").textContent="Temukan Bintang";
-  document.getElementById("result").textContent="Galaksi masih luas. Semangat, Kapten Mahes!";
-  document.getElementById("game").scrollIntoView({behavior:"smooth"});
 }
-document.getElementById("action").onclick=function(){
-  if(mode==="tap"){tap();return;}
-  if(mode==="guess"){
-    let answer=prompt("Masukkan angka 1–10:");
-    if(answer===null)return;
-    if(Number(answer)===secret){
-      document.getElementById("result").textContent="BENAR! Kamu menang! 🏆";
-      document.getElementById("target").textContent="🏆";
-      playing=false;
-    }else{
-      score--;
-      document.getElementById("score").textContent="Kesempatan: "+score;
-      document.getElementById("result").textContent=
-        score>0?(Number(answer)<secret?"Terlalu kecil!":"Terlalu besar!"):"Kesempatan habis! Angkanya "+secret;
-      if(score<=0)playing=false;
-    }
-    return;
-  }
-  if(mode==="space"){
-    document.getElementById("target").textContent=
-      ["🌟","🪐","☄️","🌙"][Math.floor(Math.random()*4)];
-    document.getElementById("result").textContent="Bintang baru ditemukan! ✨";
-  }
-};
-function closeGame(){
-  playing=false;
-  document.getElementById("game").style.display="none";
+else{
+document.getElementById("target").textContent=["🌟","🪐","☄️","🌙"][Math.floor(Math.random()*4)];
+document.getElementById("result").textContent="Bintang baru ditemukan! ✨";
 }
-function music(){
-  try{
-    if(audio){
-      audio.close();audio=null;
-      document.getElementById("musicStatus").textContent="Musik dihentikan.";
-      return;
-    }
-    audio=new (window.AudioContext||window.webkitAudioContext)();
-    osc=audio.createOscillator();
-    gain=audio.createGain();
-    osc.type="sine";osc.frequency.value=261.63;
-    gain.gain.value=0.035;
-    osc.connect(gain);gain.connect(audio.destination);
-    osc.start();
-    document.getElementById("musicStatus").textContent="🎵 Nada elektronik sedang diputar.";
-  }catch(e){
-    document.getElementById("musicStatus").textContent="Browser belum mendukung audio.";
-  }
 }
+function closeGame(){playing=false;document.getElementById("game").style.display="none"}
+
+let yt=null,ytReady=false,volume=60,currentId="";
+let songs=[];
+function onYouTubeIframeAPIReady(){
+yt=new YT.Player("player",{
+width:"100%",height:"100%",videoId:"M7lc1UVf-VE",
+playerVars:{playsinline:1},
+events:{onReady:function(e){ytReady=true;e.target.setVolume(volume);document.getElementById("status").textContent="Pemutar siap! Cari lagu atau tempel link video.";}}
+});
+}
+function getVideoId(url){
+try{
+let u=new URL(url),id="";
+if(u.hostname==="youtu.be")id=u.pathname.slice(1);
+else if(u.hostname.includes("youtube.com"))id=u.searchParams.get("v")||"";
+if(u.pathname.startsWith("/embed/")||u.pathname.startsWith("/shorts/"))id=u.pathname.split("/")[2]||id;
+return /^[a-zA-Z0-9_-]{11}$/.test(id)?id:"";
+}catch(e){return ""}
+}
+function addSong(id){
+if(songs.some(s=>s.id===id)){loadSong(id);return}
+songs.push({id:id,title:"Video YouTube"});
+let box=document.createElement("p"),btn=document.createElement("button");
+btn.textContent="▶ Video "+id;
+btn.onclick=()=>loadSong(id);
+box.appendChild(btn);document.getElementById("playlist").appendChild(box);
+loadSong(id);
+}
+function loadSong(id){
+if(!ytReady){document.getElementById("status").textContent="Pemutar sedang dimuat. Coba lagi sebentar.";return}
+currentId=id;yt.loadVideoById(id);yt.setVolume(volume);
+document.getElementById("status").textContent="Memuat lagu di Mahes World 🎵";
+}
+document.getElementById("add-form").addEventListener("submit",function(e){
+e.preventDefault();let id=getVideoId(document.getElementById("video-url").value.trim());
+if(!id){document.getElementById("status").textContent="Link video tidak valid. Coba link YouTube biasa.";return}
+addSong(id);document.getElementById("video-url").value="";
+});
+document.getElementById("search-form").addEventListener("submit",function(e){
+e.preventDefault();let q=document.getElementById("search").value.trim();
+window.open("https://www.youtube.com/results?search_query="+encodeURIComponent(q),"_blank","noopener");
+document.getElementById("status").textContent="Pilih video di YouTube, salin linknya, lalu tempel di kolom tambah video.";
+});
+function playSong(){if(ytReady)yt.playVideo()}
+function pauseSong(){if(ytReady)yt.pauseVideo()}
+function changeVolume(n){volume=Math.max(0,Math.min(100,volume+n));if(ytReady)yt.setVolume(volume);document.getElementById("status").textContent="Volume: "+volume+"%"}
+let api=document.createElement("script");
+api.src="https://www.youtube.com/iframe_api";
+document.head.appendChild(api);
 </script>
 </body>
 </html>
+
