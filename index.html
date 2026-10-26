@@ -1,159 +1,45 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Mahes World</title>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#050505"><title>Mahes World — Game Center</title>
 <style>
-*{box-sizing:border-box}
-body{margin:0;background:#080808;color:white;font-family:Arial,sans-serif}
-header{text-align:center;padding:25px 12px;background:#111;border-bottom:1px solid #444}
-header h1{letter-spacing:4px;margin:5px}
-nav{display:flex;justify-content:center;flex-wrap:wrap;gap:8px;padding:15px}
-button,.link{background:#fff;color:#000;border:0;border-radius:9px;padding:11px 15px;font-weight:bold;cursor:pointer;text-decoration:none}
-button:hover,.link:hover{background:#bbb}
-main{max-width:850px;margin:auto;padding:15px}
-section{background:#151515;border:1px solid #333;border-radius:16px;padding:18px;margin-bottom:18px}
-h2{border-bottom:1px solid #444;padding-bottom:10px}
-.hero{text-align:center}
-.hero img{width:100%;max-width:440px;max-height:480px;object-fit:cover;border-radius:14px;border:1px solid #555}
-.small{color:#bbb;font-size:14px}
-.page{display:none}.page.active{display:block}
-input{max-width:100%;margin:10px 0}
-#result{font-size:22px;font-weight:bold}
-footer{text-align:center;color:#888;padding:25px}
-</style>
-</head>
-<body>
-<header>
-  <h1>MAHES WORLD</h1>
-  <p>GAME • MUSIC • FOOTBALL</p>
-</header>
-
-<nav>
-  <button onclick="showPage('home')">Home</button>
-  <button onclick="showPage('music')">Music</button>
-  <button onclick="showPage('football')">Football</button>
-  <button onclick="showPage('puzzle')">Puzzle</button>
-  <button onclick="showPage('contact')">Contact</button>
-</nav>
-
-<main>
-<div id="home" class="page active">
-<section class="hero">
-  <h2>NAGI SEISHIRO</h2>
-  <img src="https://static.wikia.nocookie.net/bluelock/images/8/8b/Seishiro_Nagi_%28Anime%29.png"
-       alt="Foto Nagi Seishiro"
-       onerror="this.alt='Foto Nagi belum berhasil dimuat';this.style.minHeight='180px'">
-  <h3>THE LAZY GENIUS ⚽</h3>
-  <p>Selamat datang di Mahes World!</p>
-  <p class="small">Tempat main game, dengerin musik, dan santai.</p>
-</section>
-</div>
-
-<div id="music" class="page">
-<section>
-  <h2>🎵 MUSIC PLAYER</h2>
-  <p>Pilih lagu MP3 dari HP kamu:</p>
-  <input type="file" id="song" accept="audio/*">
-  <audio id="player" controls style="width:100%"></audio>
-  <p class="small">Pilih file lagu sendiri untuk memutarnya.</p>
-</section>
-</div>
-
-<div id="football" class="page">
-<section>
-  <h2>⚽ PENALTY SHOOT</h2>
-  <p>Pilih arah tendanganmu!</p>
-  <button onclick="kick('Kiri')">⬅ Kiri</button>
-  <button onclick="kick('Tengah')">⬆ Tengah</button>
-  <button onclick="kick('Kanan')">➡ Kanan</button>
-  <p id="result">Siap menendang?</p>
-  <p>Gol: <span id="goals">0</span> | Gagal: <span id="misses">0</span></p>
-  <button onclick="resetGame()">Ulangi</button>
-</section>
-</div>
-
-<div id="puzzle" class="page">
-<section>
-  <h2>🧠 MEMORY PUZZLE</h2>
-  <p>Ingat urutan angka ini:</p>
-  <h2 id="sequence">Tekan Mulai!</h2>
-  <button onclick="startPuzzle()">Mulai</button>
-  <p id="puzzleInfo"></p>
-  <input id="answer" placeholder="Ketik urutan angka">
-  <button onclick="checkPuzzle()">Cek Jawaban</button>
-</section>
-</div>
-
-<div id="contact" class="page">
-<section>
-  <h2>📱 CONTACT ME</h2>
-  <p>WhatsApp</p>
-  <a class="link" href="https://wa.me/6285664683144" target="_blank">Chat WhatsApp</a>
-  <p>Telegram</p>
-  <a class="link" href="https://t.me/hesaaaa4" target="_blank">@hesaaaa4</a>
-  <p>TikTok</p>
-  <a class="link" href="https://www.tiktok.com/@someone26831" target="_blank">@someone26831</a>
-</section>
-</div>
-</main>
-
-<footer>© 2026 Mahes World • Keep Playing ⚡</footer>
-
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#050505;color:#f5f5f5;font:15px/1.45 Arial,sans-serif}a{color:inherit;text-decoration:none}button,input{font:inherit}.layout{display:grid;grid-template-columns:230px 1fr;min-height:100vh}.sidebar{height:100vh;position:sticky;top:0;border-right:1px solid #222;padding:22px 16px;display:flex;flex-direction:column;background:#050505;z-index:5}.brand{text-align:center;padding-bottom:25px}.crown{font-size:36px}.brand h1{font-size:23px;font-style:italic;margin:2px 0;font-weight:900}.brand p{font-size:10px;letter-spacing:3px;color:#aaa;margin:0}.nav{display:grid;gap:7px}.nav a{padding:12px;border-radius:10px;color:#ddd}.nav a:hover,.nav a.active{background:#191919}.nav a span{display:inline-block;width:29px;font-size:18px}.motto{margin:auto 0 10px;font:italic 30px/1.1 Georgia,serif;transform:rotate(-5deg)}.motto small{display:block;font:11px Arial;letter-spacing:2px;margin-top:12px}.topbar{height:72px;border-bottom:1px solid #222;display:flex;align-items:center;gap:14px;padding:0 24px;position:sticky;top:0;background:#080808ed;z-index:4}.menu{display:none}.search{flex:1;max-width:550px;position:relative}.search input{width:100%;padding:12px 16px 12px 42px;background:#111;border:1px solid #222;border-radius:30px;color:white;outline:none}.search span{position:absolute;left:15px;top:8px;font-size:22px;color:#aaa}.spacer{flex:1}.topicon{border:0;background:none;color:white;font-size:22px}.profile{display:flex;align-items:center;gap:9px;border-left:1px solid #333;padding-left:15px}.avatar{border:1px solid #555;background:radial-gradient(#777,#111 65%);border-radius:50%;width:38px;height:38px;display:grid;place-items:center}.profile small{display:block;color:#aaa}.content{padding:22px;max-width:1700px;margin:auto}.columns{display:grid;grid-template-columns:minmax(0,2fr) minmax(250px,.9fr);gap:18px}.hero{min-height:420px;position:relative;overflow:hidden;border:1px solid #292929;border-radius:17px;background:#111}.hero-art{position:absolute;inset:0;background:linear-gradient(90deg,#050505 0%,#050505ed 23%,#05050560 64%,#05050515),url('yuta.png') center 35%/cover no-repeat;filter:grayscale(1)}.hero-art:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,#050505 0%,transparent 35%)}.hero-copy{position:relative;min-height:420px;padding:45px 27px;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;max-width:400px}.eyebrow{font-size:10px;letter-spacing:3px;color:#ccc;text-transform:uppercase}.hero h2{font-size:clamp(44px,5vw,68px);line-height:.86;letter-spacing:-3px;font-style:italic;margin:17px 0 10px;text-transform:uppercase}.jp{font-size:24px;letter-spacing:7px;color:#ddd;margin-bottom:15px}.quote{max-width:250px;color:#ddd;font-size:13px;margin:0 0 7px}.credit{font-size:12px;color:#aaa;margin:0}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:23px}.btn{display:inline-block;padding:10px 14px;border-radius:8px;background:#eee;color:#080808;font-weight:bold;border:1px solid #eee}.btn.alt{background:#111c;color:#fff;border-color:#666}.section,.panel,.welcome{border:1px solid #252525;border-radius:15px;background:#080808;padding:17px;margin-top:17px}.head{display:flex;align-items:center;gap:12px;margin-bottom:15px}.head .emoji{font-size:26px}.head h3{margin:0;font-size:19px}.head p{margin:2px 0;color:#999;font-size:12px}.more{margin-left:auto;color:#bbb;font-size:11px}.games{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px}.game{border:1px solid #252525;border-radius:12px;overflow:hidden;background:#0d0d0d;transition:.2s}.game:hover{transform:translateY(-4px);border-color:#888}.gameart{height:100px;display:grid;place-items:center;background:repeating-linear-gradient(135deg,#292929,#292929 15px,#111 16px,#111 31px);font-size:40px}.game:nth-child(2) .gameart{background:linear-gradient(135deg,#666,#111)}.game:nth-child(3) .gameart{background:linear-gradient(135deg,#444,#090909)}.game:nth-child(4) .gameart{background:linear-gradient(135deg,#222,#666,#090909)}.gameinfo{padding:10px}.gametitle{font-size:13px;font-weight:bold}.tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px}.tag{font-size:9px;background:#222;border-radius:15px;padding:4px 7px;color:#ddd}.right{display:grid;align-content:start;gap:0}.welcome{margin-top:0;min-height:155px;background:linear-gradient(110deg,#080808,#222);position:relative;overflow:hidden}.welcome:after{content:"乙";position:absolute;right:15px;top:-17px;font-size:130px;opacity:.08}.welcome small{color:#aaa}.welcome h2{font-size:29px;margin:3px 0 8px}.welcome p{font-size:12px;color:#aaa;max-width:220px}.panel h3{margin:0 0 15px;font-size:16px}.track{display:flex;gap:12px;align-items:center}.album{width:65px;height:65px;border-radius:9px;background:radial-gradient(#aaa,#333,#080808);display:grid;place-items:center;font-size:25px}.track strong{font-size:13px;display:block}.track small{font-size:11px;color:#aaa}.progress{height:4px;background:#333;margin:15px 0 6px;border-radius:5px;overflow:hidden}.progress span{height:100%;width:0;background:#eee;display:block}.times{display:flex;justify-content:space-between;color:#999;font-size:10px}.controls{display:flex;align-items:center;justify-content:space-between;margin-top:12px}.controls button{border:0;background:none;color:#ddd;font-size:19px}.controls .play{border-radius:50%;background:#eee;color:#050505;width:43px;height:43px}.quick{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.quick a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;background:#111;border:1px solid #222;border-radius:10px;min-height:78px;font-size:11px}.quick b{font-size:22px}.status{margin-top:15px;color:#aaa;font-size:11px}.bottom{display:grid;grid-template-columns:1fr 1.2fr;gap:17px}.item{display:flex;align-items:center;gap:12px;padding:11px;background:#111;border-radius:10px;margin-top:9px}.item b{display:block;font-size:13px}.item small{color:#aaa;font-size:11px}.news{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid #222}.news:last-child{border:0}.thumb{width:62px;height:48px;background:linear-gradient(135deg,#555,#111);border-radius:8px;display:grid;place-items:center;font-size:22px}.news b{font-size:12px;display:block}.news small{font-size:11px;color:#aaa}footer{text-align:center;color:#666;font-size:11px;padding:24px}.toast{position:fixed;bottom:20px;left:50%;transform:translate(-50%,20px);opacity:0;background:#eee;color:#111;padding:12px 17px;border-radius:10px;z-index:9;transition:.2s;pointer-events:none}.toast.show{opacity:1;transform:translate(-50%,0)}
+@media(max-width:1050px){.layout{grid-template-columns:195px 1fr}.games{grid-template-columns:repeat(2,1fr)}.gameart{height:115px}.content{padding:16px}.columns{grid-template-columns:minmax(0,1.5fr) minmax(230px,.9fr)}}
+@media(max-width:760px){.layout{display:block}.sidebar{position:fixed;left:-260px;width:240px;transition:left .25s;box-shadow:10px 0 35px #000}.sidebar.open{left:0}.menu{display:block}.topbar{height:62px;padding:0 12px;gap:8px}.profile{display:none}.content{padding:12px}.columns{grid-template-columns:1fr}.hero,.hero-copy{min-height:370px}.hero-art{background-position:58% center}.hero-copy{padding:30px 20px}.right{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.welcome{grid-column:1/-1}.panel{margin-top:0}.bottom{grid-template-columns:1fr}.motto{display:none}}
+@media(max-width:460px){.right{grid-template-columns:1fr}.welcome{grid-column:auto}.hero,.hero-copy{min-height:350px}.hero h2{font-size:46px}.games{gap:8px}.gameart{height:85px}.gameinfo{padding:8px}.head h3{font-size:17px}.section,.panel{padding:13px}.search input{font-size:11px;padding:11px 9px 11px 34px}.search span{left:11px;top:7px}}
+</style></head>
+<body><div class="layout">
+<aside class="sidebar" id="sidebar"><div class="brand"><div class="crown">♛</div><h1>MAHES WORLD</h1><p>GAME CENTER</p></div>
+<nav class="nav"><a class="active" href="#home"><span>⌂</span>Home</a><a href="#games"><span>🎮</span>Game Center</a><a href="#music"><span>♫</span>Music</a><a href="#anime"><span>◧</span>Anime / Info</a><a href="#tools"><span>⚒</span>Tools</a><a href="#contact"><span>➤</span>Contact</a></nav>
+<div class="motto">Play<br>Learn<br>Upgrade<br>Yourself<small>♛ MAHES WORLD</small></div></aside>
+<main id="home"><header class="topbar"><button class="topicon menu" id="menuBtn">☰</button><label class="search"><span>⌕</span><input id="search" placeholder="Cari game, anime, atau apapun..." type="search"></label><div class="spacer"></div><button class="topicon" id="themeBtn">☼</button><div class="profile"><div class="avatar">♛</div><div><b>Mahes</b><small>● Online</small></div></div></header>
+<div class="content"><div class="columns"><div>
+<section class="hero"><div class="hero-art"></div><div class="hero-copy"><span class="eyebrow">Jujutsu Kaisen · Special Grade</span><h2>Yuta<br>Okkotsu</h2><div class="jp">乙骨 憂太</div><p class="quote">“Aku ingin menjadi orang yang bisa melindungi orang yang aku sayangi.”</p><p class="credit">— Yuta Okkotsu</p><div class="actions"><a class="btn" href="#games">🎮 Jelajahi Game</a><a class="btn alt" href="#anime">Lihat Anime ↗</a></div></div></section>
+<section class="section" id="games"><div class="head"><span class="emoji">🎮</span><div><h3>Game Center</h3><p>Mainkan game favoritmu, langsung dari sini!</p></div><a class="more" href="#games">Lihat Semua →</a></div><div class="games">
+<a class="game searchable" data-search="roblox online popular" href="https://www.roblox.com/" target="_blank"><div class="gameart">▣</div><div class="gameinfo"><div class="gametitle">Roblox</div><div class="tags"><span class="tag">Online</span><span class="tag">Popular</span></div></div></a>
+<a class="game searchable" data-search="minecraft survival open world" href="https://www.minecraft.net/" target="_blank"><div class="gameart">▦</div><div class="gameinfo"><div class="gametitle">Minecraft</div><div class="tags"><span class="tag">Survival</span><span class="tag">Open World</span></div></div></a>
+<a class="game searchable" data-search="stumble guys multiplayer fun" href="https://www.stumbleguys.com/" target="_blank"><div class="gameart">◉</div><div class="gameinfo"><div class="gametitle">Stumble Guys</div><div class="tags"><span class="tag">Multiplayer</span><span class="tag">Fun</span></div></div></a>
+<a class="game searchable" data-search="valorant fps competitive" href="https://playvalorant.com/" target="_blank"><div class="gameart">◈</div><div class="gameinfo"><div class="gametitle">Valorant</div><div class="tags"><span class="tag">FPS</span><span class="tag">Competitive</span></div></div></a>
+</div></section></div>
+<aside class="right"><section class="welcome"><small>Welcome Back,</small><h2>Mahes ♛</h2><p>Jangan lupa istirahat, tetap semangat ngoding dan main!</p></section>
+<section class="panel" id="music"><h3>♫ &nbsp;Now Playing</h3><div class="track"><div class="album">♫</div><div><strong id="trackName">Pilih musik favoritmu</strong><small id="trackArtist">Pemutar musik Mahes</small></div></div><div class="progress"><span id="fill"></span></div><div class="times"><span id="elapsed">0:00</span><span id="duration">--:--</span></div><div class="controls"><button id="shuffle">⤨</button><button id="prev">|◀</button><button class="play" id="play">▶</button><button id="next">▶|</button><button id="repeat">↻</button></div><audio id="audio" preload="metadata"></audio><p style="font-size:11px;color:#888">Untuk memutar musik, unggah MP3 milikmu ke folder music/track1.mp3.</p></section>
+<section class="panel" id="contact"><h3>♧ &nbsp;Quick Links</h3><div class="quick"><a href="https://wa.me/6285664683144" target="_blank"><b>◉</b>WhatsApp</a><a href="https://t.me/hesaaaa4" target="_blank"><b>➤</b>Telegram</a><a href="https://www.tiktok.com/@someone26831" target="_blank"><b>♪</b>TikTok</a></div><div class="status">● Status Website<br><b style="color:#ddd;font-weight:400">Online | Mahes World</b></div></section></aside></div>
+<div class="bottom"><section class="section" id="anime"><div class="head"><span class="emoji">◧</span><div><h3>Anime / Info</h3><p>Karakter dan info menarik lainnya</p></div><a class="more" href="https://jujutsukaisen.jp/" target="_blank">Lihat →</a></div><a class="item searchable" data-search="yuta okkotsu jujutsu kaisen karakter" href="https://jujutsukaisen.jp/"><span style="font-size:25px">⚔</span><span><b>Yuta Okkotsu</b><small>Jujutsu Kaisen · Special Grade Sorcerer</small></span></a><a class="item searchable" data-search="anime rekomendasi" href="https://jujutsukaisen.jp/"><span style="font-size:25px">▤</span><span><b>Anime Spotlight</b><small>Jelajahi dunia anime favoritmu</small></span></a></section>
+<section class="section" id="tools"><div class="head"><span class="emoji">▤</span><div><h3>Latest News</h3><p>Update dan catatan terbaru</p></div></div><div class="news searchable" data-search="website update dashboard"><div class="thumb">♛</div><div><b>Mahes World — Dashboard Update</b><small>Tampilan monokrom · Game Center</small></div></div><div class="news searchable" data-search="tips coding html css pemula"><div class="thumb">⌘</div><div><b>Tips Coding</b><small>Belajar HTML, CSS, dan JavaScript</small></div></div></section></div>
+<footer>© <span id="year"></span> Mahes World · Play • Learn • Upgrade Yourself</footer></div></main></div><div class="toast" id="toast"></div>
 <script>
-function showPage(id){
- document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
- document.getElementById(id).classList.add('active');
- window.scrollTo(0,0);
-}
-
-document.getElementById('song').addEventListener('change',function(){
- if(this.files.length){
-  const player=document.getElementById('player');
-  player.src=URL.createObjectURL(this.files[0]);
-  player.play();
- }
-});
-
-let goals=0,misses=0;
-function kick(direction){
- const keeper=['Kiri','Tengah','Kanan'][Math.floor(Math.random()*3)];
- if(direction!==keeper){
-  goals++;
-  document.getElementById('result').textContent='GOOOL! 🔥 Kiper ke '+keeper;
- }else{
-  misses++;
-  document.getElementById('result').textContent='DITANGKAP! 😭 Kiper ke '+keeper;
- }
- document.getElementById('goals').textContent=goals;
- document.getElementById('misses').textContent=misses;
-}
-function resetGame(){
- goals=0;misses=0;
- document.getElementById('goals').textContent=0;
- document.getElementById('misses').textContent=0;
- document.getElementById('result').textContent='Siap menendang?';
-}
-
-let secret='';
-function startPuzzle(){
- secret=Array.from({length:4},()=>Math.floor(Math.random()*10)).join('');
- document.getElementById('sequence').textContent=secret;
- document.getElementById('puzzleInfo').textContent='Hafalkan angkanya!';
- document.getElementById('answer').value='';
- setTimeout(()=>{
-  document.getElementById('sequence').textContent='????';
-  document.getElementById('puzzleInfo').textContent='Sekarang masukkan urutannya!';
- },2500);
-}
-function checkPuzzle(){
- if(!secret){document.getElementById('puzzleInfo').textContent='Tekan Mulai dulu!';return}
- const answer=document.getElementById('answer').value.trim();
- document.getElementById('puzzleInfo').textContent=
- answer===secret?'BENAR! Kamu jago! 🎉':'Belum tepat, coba mulai lagi!';
-}
-</script>
-</body>
-</html>
+const $=s=>document.querySelector(s);$('#year').textContent=new Date().getFullYear();
+function notify(s){let t=$('#toast');t.textContent=s;t.classList.add('show');clearTimeout(window.tt);window.tt=setTimeout(()=>t.classList.remove('show'),2200)}
+$('#menuBtn').onclick=()=>$('#sidebar').classList.toggle('open');
+document.querySelectorAll('.nav a').forEach(a=>a.onclick=()=>{document.querySelectorAll('.nav a').forEach(n=>n.classList.remove('active'));a.classList.add('active');$('#sidebar').classList.remove('open')});
+$('#search').addEventListener('input',e=>{let q=e.target.value.toLowerCase().trim();document.querySelectorAll('.searchable').forEach(x=>x.style.display=!q||(x.dataset.search||x.textContent).toLowerCase().includes(q)?'':'none')});
+$('#themeBtn').onclick=()=>{document.body.classList.toggle('light');let on=document.body.classList.contains('light');document.body.style.background=on?'#e8e8e8':'#050505';document.body.style.color=on?'#111':'#f5f5f5';document.querySelectorAll('.sidebar,.topbar,.section,.panel,.welcome,.game').forEach(x=>{x.style.filter=on?'invert(.9) hue-rotate(180deg)':'none'});notify(on?'Mode terang aktif':'Mode gelap aktif')};
+const audio=$('#audio');let tracks=[{name:'Track 1',artist:'music/track1.mp3',src:'music/track1.mp3'},{name:'Track 2',artist:'music/track2.mp3',src:'music/track2.mp3'}],idx=0;
+function load(){audio.src=tracks[idx].src;$('#trackName').textContent=tracks[idx].name;$('#trackArtist').textContent=tracks[idx].artist;$('#fill').style.width='0%'}
+function toggle(){if(!audio.src)load();if(audio.paused)audio.play().then(()=>$('#play').textContent='Ⅱ').catch(()=>notify('Unggah file MP3 ke folder music dulu ya.'));else{audio.pause();$('#play').textContent='▶'}}
+$('#play').onclick=toggle;$('#next').onclick=()=>{idx=(idx+1)%tracks.length;load();toggle()};$('#prev').onclick=()=>{idx=(idx+tracks.length-1)%tracks.length;load();toggle()};$('#shuffle').onclick=()=>{idx=Math.floor(Math.random()*tracks.length);load();notify('Track diacak')};$('#repeat').onclick=()=>{audio.loop=!audio.loop;notify(audio.loop?'Ulangi aktif':'Ulangi nonaktif')};
+function fmt(n){n=Math.floor(n||0);return Math.floor(n/60)+':'+String(n%60).padStart(2,'0')}
+audio.ontimeupdate=()=>{if(audio.duration){$('#fill').style.width=audio.currentTime/audio.duration*100+'%';$('#elapsed').textContent=fmt(audio.currentTime);$('#duration').textContent=fmt(audio.duration)}};
+audio.onended=()=>{if(!audio.loop){idx=(idx+1)%tracks.length;load();$('#play').textContent='▶'}};
+</script></body></html>
